@@ -3,10 +3,7 @@ package com.craftelix.weatherviewer.controller;
 import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserCreateDto;
 import com.craftelix.weatherviewer.dto.UserDto;
-import com.craftelix.weatherviewer.exception.InvalidPasswordException;
-import com.craftelix.weatherviewer.exception.PasswordMismatchException;
-import com.craftelix.weatherviewer.exception.UserAlreadyExistException;
-import com.craftelix.weatherviewer.exception.UserNotFoundException;
+import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.service.AuthenticationService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
@@ -38,49 +35,38 @@ public class UserController {
 
     @GetMapping("/login")
     public ModelAndView showLoginForm() {
-        ModelAndView mv = new ModelAndView("login");
-        mv.addObject("user", new UserDto());
-        return mv;
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("user", new UserDto());
+        return modelAndView;
     }
 
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute("user") UserDto userDto, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView();
-        try {
-            User user = authenticationService.authenticate(userDto);
+        User user = authenticationService.authenticate(userDto);
+        SessionDto session = sessionService.createSession(user.getId());
 
-            SessionDto session = sessionService.createSession(user.getId());
+        Cookie cookie = buildSessionIdCookie(session);
+        response.addCookie(cookie);
 
-            Cookie cookie = buildSessionIdCookie(session);
-            response.addCookie(cookie);
-
-            mv.addObject("login", userDto.getLogin());
-            mv.setViewName("redirect:/");
-        } catch (UserNotFoundException | InvalidPasswordException e) {
-            mv.addObject("errorMessage", e.getMessage());
-            mv.setViewName("login");
-        }
-        return mv;
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        modelAndView.addObject("login", userDto.getLogin());
+        return modelAndView;
     }
 
     @GetMapping("/register")
     public ModelAndView showRegisterForm() {
-        ModelAndView mv = new ModelAndView("register");
-        mv.addObject("user", new UserCreateDto());
-        return mv;
+        ModelAndView modelAndView = new ModelAndView("register");
+        modelAndView.addObject("user", new UserCreateDto());
+        return modelAndView;
     }
 
     @PostMapping("/register")
     public ModelAndView register(@ModelAttribute("user") UserCreateDto userCreateDto) {
-        ModelAndView mv = new ModelAndView();
-        try {
-            userService.save(userCreateDto);
-            mv.addObject("successMessage", "User registered successfully. Go to sign in page.");
-        } catch (UserAlreadyExistException | PasswordMismatchException e) {
-            mv.addObject("errorMessage", e.getMessage());
-        }
-        mv.setViewName("register");
-        return mv;
+        userService.save(userCreateDto);
+
+        ModelAndView modelAndView = new ModelAndView("register");
+        modelAndView.addObject("successMessage", "User registered successfully. Go to sign in page.");
+        return modelAndView;
     }
 
     @GetMapping("/logout")
