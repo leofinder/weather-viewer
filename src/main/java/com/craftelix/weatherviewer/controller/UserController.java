@@ -47,9 +47,9 @@ public class UserController {
     public ModelAndView login(@ModelAttribute("user") UserDto userDto, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView();
         try {
-            authenticationService.checkCredentials(userDto);
+            User user = authenticationService.authenticate(userDto);
 
-            SessionDto session = sessionService.createSession(userDto);
+            SessionDto session = sessionService.createSession(user.getId());
 
             Cookie cookie = buildSessionIdCookie(session);
             response.addCookie(cookie);

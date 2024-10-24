@@ -30,7 +30,4 @@ public class AuthenticationService {
         return user;
     }
 
-    public void checkCredentials(UserDto userDto) {
-        authenticate(userDto);
-    }
 }
