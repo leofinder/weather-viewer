@@ -95,8 +95,24 @@
     font-weight: 500;
 }
 
+.temperature-block h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.weather-details i {
+    width: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
 .btn-outline-primary {
     border-width: 1px;
+}
+
+.btn-outline-danger {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
 }
 
 .action-container {
