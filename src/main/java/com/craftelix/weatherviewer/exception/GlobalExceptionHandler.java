@@ -28,4 +28,11 @@ public class GlobalExceptionHandler {
         return modelAndView;
     }
 
+    @ExceptionHandler(SessionNotFoundException.class)
+    public ModelAndView handleSessionNotFoundExceptions() {
+        ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("user", new UserDto());
+        return modelAndView;
+    }
+
 }
