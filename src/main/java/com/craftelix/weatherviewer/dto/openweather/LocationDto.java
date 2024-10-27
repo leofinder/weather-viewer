@@ -25,4 +25,6 @@ public class LocationDto {
     private String country;
 
     private String state;
+
+    private boolean isAdded;
 }
