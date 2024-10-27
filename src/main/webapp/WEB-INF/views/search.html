@@ -14,14 +14,7 @@
 <div th:insert="~{navbar :: navbar}"> </div>
 
 <div class="container" style="margin-top: 100px;">
-    <form method="get" th:action="@{/search}" class="search-container mb-4">
-        <div class="search-wrapper">
-            <input type="text" class="search-input" id="locationSearch" placeholder="Search location..." name="name" required>
-            <button class="search-button" onclick="searchLocation()">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
+    <div th:insert="~{search-form :: search-form}"> </div>
 
     <div class="locations-list container">
         <div class="flex-row">
