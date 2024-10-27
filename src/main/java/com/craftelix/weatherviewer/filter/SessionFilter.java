@@ -53,7 +53,7 @@ public class SessionFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         boolean shouldFilter = true;
         String path = request.getRequestURI();
-        if ("/login".equals(path) || "/logout".equals(path) || "/register".equals(path)) {
+        if ("/login".equals(path) || "/logout".equals(path) || "/register".equals(path) || path.contains("/resources/")) {
             shouldFilter = false;
         }
         return !shouldFilter;
