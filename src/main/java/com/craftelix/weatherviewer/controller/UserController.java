@@ -41,7 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute("user") UserDto userDto, HttpServletResponse response) {
+    public ModelAndView login(@ModelAttribute("user") UserDto userDto,
+                              HttpServletResponse response) {
         User user = authenticationService.authenticate(userDto);
         SessionDto session = sessionService.createSession(user.getId());
 
@@ -70,7 +71,8 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(@CookieValue(value = "sessionId", defaultValue = "") String sessionId, HttpServletResponse response) {
+    public String logout(@CookieValue(value = "sessionId", defaultValue = "") String sessionId,
+                         HttpServletResponse response) {
         if (!sessionId.isBlank()) {
             sessionService.removeSession(UUID.fromString(sessionId));
             // TODO
