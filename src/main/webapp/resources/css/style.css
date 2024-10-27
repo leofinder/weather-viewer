@@ -1,0 +1,124 @@
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+.search-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 50px 12px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 8px 15px;
+    color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    color: #0056b3;
+}
+
+.search-location {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.locations-list {
+    margin: 20px auto;
+}
+
+.location-card {
+    flex: 0 0 350px;
+    width: 350px;
+    margin-bottom: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+}
+
+.location-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.coordinates-table {
+    font-family: monospace;
+}
+
+
+.badge {
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+.location-badges .badge {
+    padding: 0.5em 0.8em;
+    font-weight: normal;
+    font-size: 0.85em;
+    margin-right: 0.5em;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.btn-outline-primary {
+    border-width: 1px;
+}
+
+.action-container {
+    width: 100px;
+    text-align: center;
+}
+
+.action-container .badge {
+    display: inline-block;
+    width: 100%;
+}
+
+@media (max-width: 1199px) {
+    .location-card {
+        width: calc(50% - 20px);
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .location-card {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
