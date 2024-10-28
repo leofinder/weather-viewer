@@ -27,7 +27,7 @@ public class ConfigDispatcherServletInitializer extends AbstractAnnotationConfig
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new DelegatingFilterProxy("sessionFilter") };
+        return new Filter[] {new DelegatingFilterProxy("sessionFilter") };
     }
 
     @Override

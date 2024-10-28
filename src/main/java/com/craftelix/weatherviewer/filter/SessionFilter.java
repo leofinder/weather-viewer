@@ -85,5 +85,4 @@ public class SessionFilter extends OncePerRequestFilter {
         return isValid;
     }
 
-
 }

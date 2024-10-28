@@ -35,7 +35,7 @@ public class WeatherService {
                         .queryParam("appid", restClientConfig.getApiKey())
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() { });
 
         return locations;
     }
