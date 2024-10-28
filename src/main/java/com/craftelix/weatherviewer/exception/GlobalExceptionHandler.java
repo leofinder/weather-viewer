@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.exception;
 
 import com.craftelix.weatherviewer.dto.UserCreateDto;
-import com.craftelix.weatherviewer.dto.UserDto;
+import com.craftelix.weatherviewer.dto.UserLoginDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class, InvalidPasswordException.class})
     public ModelAndView handleAuthenticationExceptions(final Exception ex, final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("user", new UserDto(request.getParameter("login"), ""));
+        modelAndView.addObject("user", new UserLoginDto(request.getParameter("login"), ""));
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;
     }
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SessionNotFoundException.class)
     public ModelAndView handleSessionNotFoundExceptions() {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("user", new UserDto());
+        modelAndView.addObject("user", new UserLoginDto());
         return modelAndView;
     }
 

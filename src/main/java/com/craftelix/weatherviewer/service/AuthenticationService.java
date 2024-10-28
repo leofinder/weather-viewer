@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.UserDto;
+import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.InvalidPasswordException;
 import com.craftelix.weatherviewer.exception.UserNotFoundException;
@@ -19,11 +19,11 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
 
-    public User authenticate(UserDto userDto) {
-        User user = userRepository.findByLogin(userDto.getLogin())
-                .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userDto.getLogin())));
+    public User authenticate(UserLoginDto userLoginDto) {
+        User user = userRepository.findByLogin(userLoginDto.getLogin())
+                .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getLogin())));
 
-        if (!PasswordHashing.checkPassword(userDto.getPassword(), user.getPassword())) {
+        if (!PasswordHashing.checkPassword(userLoginDto.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Invalid password");
         }
 

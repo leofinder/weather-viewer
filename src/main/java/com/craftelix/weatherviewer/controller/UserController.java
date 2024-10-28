@@ -2,7 +2,7 @@ package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserCreateDto;
-import com.craftelix.weatherviewer.dto.UserDto;
+import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.service.AuthenticationService;
 import com.craftelix.weatherviewer.service.SessionService;
@@ -36,21 +36,21 @@ public class UserController {
     @GetMapping("/login")
     public ModelAndView showLoginForm() {
         ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("user", new UserDto());
+        modelAndView.addObject("user", new UserLoginDto());
         return modelAndView;
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute("user") UserDto userDto,
+    public ModelAndView login(@ModelAttribute("user") UserLoginDto userLoginDto,
                               HttpServletResponse response) {
-        User user = authenticationService.authenticate(userDto);
+        User user = authenticationService.authenticate(userLoginDto);
         SessionDto session = sessionService.createSession(user.getId());
 
         Cookie cookie = buildSessionIdCookie(session);
         response.addCookie(cookie);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/");
-        modelAndView.addObject("login", userDto.getLogin());
+        modelAndView.addObject("login", userLoginDto.getLogin());
         return modelAndView;
     }
 
