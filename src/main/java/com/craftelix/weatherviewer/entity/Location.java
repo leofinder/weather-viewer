@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -23,9 +24,9 @@ public class Location {
     @Column("user_id")
     private Long userId;
 
-    private Double latitude;
+    private BigDecimal latitude;
 
-    private Double longitude;
+    private BigDecimal longitude;
 
     @Override
     public boolean equals(Object o) {
