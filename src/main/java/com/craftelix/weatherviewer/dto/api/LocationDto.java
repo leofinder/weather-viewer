@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.dto.openweather;
+package com.craftelix.weatherviewer.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
