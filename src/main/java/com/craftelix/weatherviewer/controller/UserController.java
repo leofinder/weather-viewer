@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.SessionDto;
-import com.craftelix.weatherviewer.dto.UserCreateDto;
+import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.service.AuthenticationService;
@@ -57,13 +57,13 @@ public class UserController {
     @GetMapping("/register")
     public ModelAndView showRegisterForm() {
         ModelAndView modelAndView = new ModelAndView("register");
-        modelAndView.addObject("user", new UserCreateDto());
+        modelAndView.addObject("user", new UserSignupDto());
         return modelAndView;
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@ModelAttribute("user") UserCreateDto userCreateDto) {
-        userService.save(userCreateDto);
+    public ModelAndView register(@ModelAttribute("user") UserSignupDto userSignupDto) {
+        userService.save(userSignupDto);
 
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("successMessage", "User registered successfully. Go to sign in page.");

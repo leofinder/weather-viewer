@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.UserCreateDto;
+import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.PasswordMismatchException;
 import com.craftelix.weatherviewer.exception.SessionNotFoundException;
@@ -25,11 +25,11 @@ public class UserService {
 
     private final UserMapper userMapper;
 
-    public void save(UserCreateDto userCreateDto) {
-        User user = userMapper.toEntity(userCreateDto);
+    public void save(UserSignupDto userSignupDto) {
+        User user = userMapper.toEntity(userSignupDto);
         if (userRepository.existsByLogin(user.getLogin())) {
             throw new UserAlreadyExistException(String.format("User %s already exists", user.getLogin()));
-        } else if (!userCreateDto.getPassword().equals(userCreateDto.getConfirmPassword())) {
+        } else if (!userSignupDto.getPassword().equals(userSignupDto.getConfirmPassword())) {
             throw new PasswordMismatchException("Password and confirm password do not match");
         }
         user.setPassword(PasswordHashing.hashPassword(user.getPassword()));
