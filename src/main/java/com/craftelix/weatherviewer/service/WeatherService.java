@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.service;
 
 import com.craftelix.weatherviewer.config.RestClientConfig;
-import com.craftelix.weatherviewer.dto.api.LocationDto;
+import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,10 +24,10 @@ public class WeatherService {
         this.restClientConfig = restClientConfig;
     }
 
-    public List<LocationDto> findLocationsByName(String city) {
+    public List<LocationApiDto> findLocationsByName(String city) {
         int limit = 5;
 
-        List<LocationDto> locations = restClient.get()
+        List<LocationApiDto> locations = restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(restClientConfig.getGeoApiPath())
                         .queryParam("q", city)

@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.service;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
-import com.craftelix.weatherviewer.dto.api.LocationDto;
+import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
@@ -39,18 +39,18 @@ public class LocationService {
         );
     }
 
-    public List<LocationDto> findLocationsByUser(User user) {
+    public List<LocationApiDto> findLocationsByUser(User user) {
         List<Location> userLocations = locationRepository.findByUserId(user.getId());
         return locationMapper.toDto(userLocations);
     }
 
-    public List<LocationDto> markLocationsAsAddedForUser(List<LocationDto> locationsDto, User user) {
+    public List<LocationApiDto> markLocationsAsAddedForUser(List<LocationApiDto> locationsDto, User user) {
         List<Location> userLocations = locationRepository.findByUserId(user.getId());
 
-        for (LocationDto locationDto : locationsDto) {
-            Location location = locationMapper.toEntity(locationDto);
+        for (LocationApiDto locationApiDto : locationsDto) {
+            Location location = locationMapper.toEntity(locationApiDto);
             location.setUserId(user.getId());
-            locationDto.setAdded(userLocations.contains(location));
+            locationApiDto.setAdded(userLocations.contains(location));
         }
         return locationsDto;
     }

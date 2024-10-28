@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({ "local_names" })
-public class LocationDto {
+public class LocationApiDto {
 
     private String name;
 

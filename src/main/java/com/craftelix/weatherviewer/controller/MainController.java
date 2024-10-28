@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.controller;
 
-import com.craftelix.weatherviewer.dto.api.LocationDto;
+import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.service.LocationService;
 import com.craftelix.weatherviewer.service.UserService;
@@ -28,7 +28,7 @@ public class MainController {
     @GetMapping("/")
     public ModelAndView index(@CookieValue(value = "sessionId", defaultValue = "") String sessionId) {
         User user = userService.getUserBySessionId(UUID.fromString(sessionId));
-        List<LocationDto> locations = locationService.findLocationsByUser(user);
+        List<LocationApiDto> locations = locationService.findLocationsByUser(user);
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("login", user.getLogin());
@@ -39,7 +39,7 @@ public class MainController {
     public ModelAndView search(@RequestParam(name = "name") String name,
                                @CookieValue(value = "sessionId", defaultValue = "") String sessionId) {
         User user = userService.getUserBySessionId(UUID.fromString(sessionId));
-        List<LocationDto> locations = weatherService.findLocationsByName(name);
+        List<LocationApiDto> locations = weatherService.findLocationsByName(name);
         locations = locationService.markLocationsAsAddedForUser(locations, user);
 
         ModelAndView modelAndView = new ModelAndView("search");
