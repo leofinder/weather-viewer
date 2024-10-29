@@ -2,7 +2,9 @@ function addLocation(button) {
     const data = {
         name: button.dataset.name,
         latitude: button.dataset.latitude,
-        longitude: button.dataset.longitude
+        longitude: button.dataset.longitude,
+        country: button.dataset.country,
+        state: button.dataset.state
     };
 
     fetch('api/location/add', {
