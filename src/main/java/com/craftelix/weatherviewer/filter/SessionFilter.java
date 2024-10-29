@@ -2,6 +2,7 @@ package com.craftelix.weatherviewer.filter;
 
 import com.craftelix.weatherviewer.entity.Session;
 import com.craftelix.weatherviewer.service.SessionService;
+import com.craftelix.weatherviewer.service.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,9 +26,12 @@ public class SessionFilter extends OncePerRequestFilter {
 
     private final SessionService sessionService;
 
+    private final UserService userService;
+
     @Autowired
-    public SessionFilter(SessionService sessionService) {
+    public SessionFilter(SessionService sessionService, UserService userService) {
         this.sessionService = sessionService;
+        this.userService = userService;
     }
 
     @Override
@@ -42,6 +46,7 @@ public class SessionFilter extends OncePerRequestFilter {
         UUID sessionId = UUID.fromString(sessionCookie.get().getValue());
 
         if (isSessionValid(sessionId)) {
+            request.setAttribute("user", userService.getUserBySessionId(sessionId));
             filterChain.doFilter(request, response);
         } else {
             sessionService.removeSession(sessionId);
