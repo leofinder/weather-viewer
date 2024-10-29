@@ -23,6 +23,12 @@ public class RestClientConfig {
     @Value("${weather.api.geo-api-path}")
     private String geoApiPath;
 
+    @Value("${weather.api.limit}")
+    private String limit;
+
+    @Value("${weather.api.units}")
+    private String units;
+
     @Value("${weather.api.key}")
     private String apiKey;
 

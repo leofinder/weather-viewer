@@ -25,17 +25,16 @@ public class WeatherService {
     }
 
     public List<LocationApiDto> findLocationsByName(String city) {
-        int limit = 5;
-
-        List<LocationApiDto> locations = restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(restClientConfig.getGeoApiPath())
                         .queryParam("q", city)
-                        .queryParam("limit", limit)
+                        .queryParam("limit", restClientConfig.getLimit())
                         .queryParam("appid", restClientConfig.getApiKey())
                         .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() { });
+    }
 
         return locations;
     }
