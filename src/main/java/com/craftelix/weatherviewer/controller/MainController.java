@@ -25,10 +25,9 @@ public class MainController {
     private final LocationService locationService;
 
     @GetMapping("/")
-    public ModelAndView index(@CookieValue(value = "sessionId", defaultValue = "") String sessionId) {
-        User user = userService.getUserBySessionId(UUID.fromString(sessionId));
     public ModelAndView index(HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
+        List<LocationResponseDto> locations = locationService.getUserLocationsWithWeatherData(user);
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("login", user.getLogin());

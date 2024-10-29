@@ -39,7 +39,15 @@ public class LocationService {
         );
     }
 
-    public List<LocationApiDto> findLocationsByUser(User user) {
+    public List<LocationResponseDto> getUserLocationsWithWeatherData(User user) {
+        List<LocationResponseDto> userLocationsDto = getUserLocations(user);
+        for (LocationResponseDto location : userLocationsDto) {
+            location.setWeatherApi(weatherService.getWeatherData(location.getLatitude(), location.getLongitude()));
+        }
+        return userLocationsDto;
+    }
+
+    private List<LocationResponseDto> getUserLocations(User user) {
         List<Location> userLocations = locationRepository.findByUserId(user.getId());
         return locationMapper.toDto(userLocations);
     }
