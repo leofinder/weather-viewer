@@ -2,12 +2,14 @@ package com.craftelix.weatherviewer.service;
 
 import com.craftelix.weatherviewer.config.RestClientConfig;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
+import com.craftelix.weatherviewer.dto.api.WeatherApiDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -36,7 +38,17 @@ public class WeatherService {
                 .body(new ParameterizedTypeReference<>() { });
     }
 
-        return locations;
+    public WeatherApiDto getWeatherData(BigDecimal latitude, BigDecimal longitude) {
+        return restClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(restClientConfig.getDataApiPath())
+                        .queryParam("lat", latitude)
+                        .queryParam("lon", longitude)
+                        .queryParam("appid", restClientConfig.getApiKey())
+                        .queryParam("units", restClientConfig.getUnits())
+                        .build())
+                .retrieve()
+                .body(WeatherApiDto.class);
     }
 
 }
