@@ -17,4 +17,8 @@ public class LocationRequestDto {
 
     private BigDecimal longitude;
 
+    private String country;
+
+    private String state;
+
 }

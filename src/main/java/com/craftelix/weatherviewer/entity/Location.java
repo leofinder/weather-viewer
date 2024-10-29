@@ -28,6 +28,10 @@ public class Location {
 
     private BigDecimal longitude;
 
+    private String country;
+
+    private String state;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
