@@ -36,6 +36,31 @@ function addLocation(button) {
         });
 }
 
+function removeLocation(button) {
+    const locationName = button.getAttribute('data-name');
+    const locationId = button.getAttribute('data-id');
+
+    fetch(`/api/locations/${locationId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                const card = button.closest('.location-card');
+                if (card) {
+                    card.remove();
+                }
+            } else {
+                console.error('Failed to remove location');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 function showErrorNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'alert alert-danger position-fixed top-0 end-0 m-3';

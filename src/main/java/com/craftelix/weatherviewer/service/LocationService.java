@@ -1,6 +1,7 @@
 package com.craftelix.weatherviewer.service;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
+import com.craftelix.weatherviewer.dto.LocationResponseDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
 import com.craftelix.weatherviewer.entity.User;
@@ -31,10 +32,8 @@ public class LocationService {
         locationRepository.save(location);
     }
 
-    public void delete(LocationRequestDto locationRequestDto, User user) {
-        Location location = locationMapper.toEntity(locationRequestDto);
-        location.setUserId(user.getId());
-        locationRepository.findByLocationInfo(location).ifPresent(
+    public void delete(Long id, User user) {
+        locationRepository.findByIdAndUserId(id, user.getId()).ifPresent(
                 locationRepository::delete
         );
     }
