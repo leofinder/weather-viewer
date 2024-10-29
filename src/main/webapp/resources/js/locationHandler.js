@@ -7,7 +7,7 @@ function addLocation(button) {
         state: button.dataset.state
     };
 
-    fetch('api/location/add', {
+    fetch('api/locations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
