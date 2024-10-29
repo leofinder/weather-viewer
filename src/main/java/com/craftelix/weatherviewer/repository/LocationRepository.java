@@ -23,6 +23,8 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
             """)
     Optional<Location> findByLocationInfo(@Param("location") Location location);
 
+    Optional<Location> findByIdAndUserId(Long id, Long userId);
+
     List<Location> findByUserId(Long userId);
 
 }
