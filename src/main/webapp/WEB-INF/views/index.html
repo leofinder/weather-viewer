@@ -28,7 +28,7 @@
 
                         <div class="weather-info">
                             <div class="icon text-center">
-                                <img th:src="${location.weatherApi.icon}" alt="Weather icon">
+                                <img th:src="'https://openweathermap.org/img/wn/' + ${location.weatherApi.icon} + '@2x.png'" alt="Weather icon">
                             </div>
                             <div class="temperature text-center">
                                 <h2><span th:text="${location.weatherApi.temp}">25</span>°C</h2>

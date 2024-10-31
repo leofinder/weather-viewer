@@ -25,9 +25,9 @@ public class WeatherApiDeserializer extends StdDeserializer<WeatherApiDto> {
         JsonNode weatherNode = node.get("weather");
         JsonNode mainNode = node.get("main");
 
-        String main = weatherNode.get(0).get("main").asText();
-        String description = weatherNode.get(0).get("description").asText();
-        String icon = String.format("https://openweathermap.org/img/wn/%s@2x.png", weatherNode.get(0).get("icon").asText());
+        String main = weatherNode.isEmpty() ? "" : weatherNode.get(0).get("main").asText();
+        String description = weatherNode.isEmpty() ? "" : weatherNode.get(0).get("description").asText();
+        String icon = weatherNode.isEmpty() ? "01n" : weatherNode.get(0).get("icon").asText();
 
         int temp = mainNode.get("temp").asInt();
         int feelsLike = mainNode.get("feels_like").asInt();
