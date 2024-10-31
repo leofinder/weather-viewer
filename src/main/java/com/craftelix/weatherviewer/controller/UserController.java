@@ -4,14 +4,17 @@ import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
+import com.craftelix.weatherviewer.exception.UserValidationException;
 import com.craftelix.weatherviewer.service.AuthenticationService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -62,7 +65,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@ModelAttribute("user") UserSignupDto userSignupDto) {
+    public ModelAndView register(@Valid @ModelAttribute("user") UserSignupDto userSignupDto,
+                                 BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new UserValidationException(bindingResult);
+        }
+
         userService.save(userSignupDto);
 
         ModelAndView modelAndView = new ModelAndView("register");

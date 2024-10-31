@@ -160,6 +160,10 @@
     display: none;
 }
 
+.preserve-whitespace {
+    white-space: pre-line;
+}
+
 @media (max-width: 1199px) {
     .location-card {
         width: calc(50% - 20px);
