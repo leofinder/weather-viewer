@@ -2,6 +2,17 @@
     border-bottom: 1px solid #ddd;
 }
 
+.logo img {
+    width: 120px;
+    height: auto;
+    stroke-width: 3px;
+}
+
+.login-container,
+.registration-container {
+    max-width: 500px;
+}
+
 .container {
     margin-top: 80px;
 }
@@ -175,5 +186,13 @@
     .location-card {
         max-width: 100%;
         flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .login-container,
+    .registration-container {
+        max-width: 90%;
+        min-width: 280px;
     }
 }
