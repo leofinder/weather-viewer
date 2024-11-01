@@ -20,8 +20,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
 
     public User authenticate(UserLoginDto userLoginDto) {
-        User user = userRepository.findByLogin(userLoginDto.getLogin())
-                .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getLogin())));
+        User user = userRepository.findByUsername(userLoginDto.getUsername())
+                .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername())));
 
         if (!PasswordHashing.checkPassword(userLoginDto.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Invalid password");

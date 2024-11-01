@@ -27,8 +27,8 @@ public class UserService {
 
     public void save(UserSignupDto userSignupDto) {
         User user = userMapper.toEntity(userSignupDto);
-        if (userRepository.existsByLogin(user.getLogin())) {
-            throw new UserAlreadyExistException(String.format("User %s already exists", user.getLogin()));
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new UserAlreadyExistException(String.format("User %s already exists", user.getUsername()));
         } else if (!userSignupDto.getPassword().equals(userSignupDto.getConfirmPassword())) {
             throw new PasswordMismatchException("Password and confirm password do not match");
         }

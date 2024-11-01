@@ -16,7 +16,7 @@ public class UserSignupDto {
             regexp = "^\\S+$",
             message = "Username must not contain whitespace characters"
     )
-    private String login;
+    private String username;
 
     @Size(min = 3, max = 32, message = "Password must be between 3 and 32 characters long")
     @Pattern(

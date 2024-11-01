@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserAlreadyExistException.class, PasswordMismatchException.class})
     public ModelAndView handleRegisterExceptions(final Exception ex, final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/register");
-        modelAndView.addObject("user", new UserSignupDto(request.getParameter("login"), "", ""));
+        modelAndView.addObject("user", new UserSignupDto(request.getParameter("username"), "", ""));
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;
     }
@@ -29,15 +29,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserValidationException.class)
     public ModelAndView handleUserValidationException(final UserValidationException ex, final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/register");
-        modelAndView.addObject("user", new UserSignupDto(request.getParameter("login"), "", ""));
-        modelAndView.addObject("errorMessage", buildErrorMessage(ex.getBindingResult(), "login", "password"));
+        modelAndView.addObject("user", new UserSignupDto(request.getParameter("username"), "", ""));
+        modelAndView.addObject("errorMessage", buildErrorMessage(ex.getBindingResult(), "username", "password"));
         return modelAndView;
     }
 
     @ExceptionHandler({UserNotFoundException.class, InvalidPasswordException.class})
     public ModelAndView handleAuthenticationExceptions(final Exception ex, final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("user", new UserLoginDto(request.getParameter("login"), ""));
+        modelAndView.addObject("user", new UserLoginDto(request.getParameter("username"), ""));
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;
     }

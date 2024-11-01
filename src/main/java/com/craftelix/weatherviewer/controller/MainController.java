@@ -30,7 +30,7 @@ public class MainController {
         List<LocationResponseDto> locations = locationService.getUserLocationsWithWeatherData(user);
 
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("login", user.getLogin());
+        modelAndView.addObject("user", user);
         modelAndView.addObject("locations", locations);
         return modelAndView;
     }
@@ -43,7 +43,7 @@ public class MainController {
         locations = locationService.markLocationsAsAddedForUser(locations, user);
 
         ModelAndView modelAndView = new ModelAndView("search");
-        modelAndView.addObject("login", user.getLogin());
+        modelAndView.addObject("user", user);
         modelAndView.addObject("locations", locations);
         return modelAndView;
     }

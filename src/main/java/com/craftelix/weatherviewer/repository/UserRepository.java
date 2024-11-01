@@ -12,9 +12,9 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    boolean existsByLogin(String login);
+    boolean existsByUsername(String username);
 
-    Optional<User> findByLogin(String login);
+    Optional<User> findByUsername(String username);
 
     @Query("""
             SELECT *

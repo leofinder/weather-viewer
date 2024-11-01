@@ -19,8 +19,8 @@
     <div class="login-container bg-light border rounded shadow-sm p-3 w-100">
         <form method="post" th:action="@{/login}" th:object="${user}">
             <div class="mb-3">
-                <label for="login" class="form-label">Username or email address</label>
-                <input type="text" class="form-control" id="login" th:field="*{login}" placeholder="Username or email" required>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Username" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>

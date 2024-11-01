@@ -53,7 +53,7 @@ public class UserController {
         response.addCookie(cookie);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/");
-        modelAndView.addObject("login", userLoginDto.getLogin());
+        modelAndView.addObject("user", userLoginDto);
         return modelAndView;
     }
 
