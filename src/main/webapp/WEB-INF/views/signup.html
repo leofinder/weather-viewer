@@ -17,7 +17,7 @@
         <h1>Welcome to the Weather</h1>
     </div>
     <div class="registration-container bg-light border rounded shadow-sm p-3 w-100">
-        <form method="post" th:action="@{/register}" th:object="${user}">
+        <form method="post" th:action="@{/signup}" th:object="${user}">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Username" required>

@@ -57,15 +57,15 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/register")
-    public ModelAndView showRegisterForm() {
-        ModelAndView modelAndView = new ModelAndView("register");
+    @GetMapping("/signup")
+    public ModelAndView showSignupForm() {
+        ModelAndView modelAndView = new ModelAndView("/signup");
         modelAndView.addObject("user", new UserSignupDto());
         return modelAndView;
     }
 
-    @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute("user") UserSignupDto userSignupDto,
+    @PostMapping("/signup")
+    public ModelAndView signup(@Valid @ModelAttribute("user") UserSignupDto userSignupDto,
                                  BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -74,7 +74,7 @@ public class UserController {
 
         userService.save(userSignupDto);
 
-        ModelAndView modelAndView = new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("/signup");
         modelAndView.addObject("successMessage", "User registered successfully. Go to sign in page.");
         return modelAndView;
     }

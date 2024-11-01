@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({UserAlreadyExistException.class, PasswordMismatchException.class})
     public ModelAndView handleRegisterExceptions(final Exception ex, final HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/register");
+        ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new UserSignupDto(request.getParameter("username"), "", ""));
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserValidationException.class)
     public ModelAndView handleUserValidationException(final UserValidationException ex, final HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/register");
+        ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new UserSignupDto(request.getParameter("username"), "", ""));
         modelAndView.addObject("errorMessage", buildErrorMessage(ex.getBindingResult(), "username", "password"));
         return modelAndView;
