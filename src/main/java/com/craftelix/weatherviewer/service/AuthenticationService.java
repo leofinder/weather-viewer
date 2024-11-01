@@ -1,9 +1,11 @@
 package com.craftelix.weatherviewer.service;
 
+import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.InvalidPasswordException;
 import com.craftelix.weatherviewer.exception.UserNotFoundException;
+import com.craftelix.weatherviewer.mapper.UserMapper;
 import com.craftelix.weatherviewer.repository.UserRepository;
 import com.craftelix.weatherviewer.util.PasswordHashing;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,9 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
 
-    public User authenticate(UserLoginDto userLoginDto) {
+    private final UserMapper userMapper;
+
+    public UserDto authenticate(UserLoginDto userLoginDto) {
         User user = userRepository.findByUsername(userLoginDto.getUsername())
                 .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername())));
 
@@ -27,7 +31,7 @@ public class AuthenticationService {
             throw new InvalidPasswordException("Invalid password");
         }
 
-        return user;
+        return userMapper.toDto(user);
     }
 
 }

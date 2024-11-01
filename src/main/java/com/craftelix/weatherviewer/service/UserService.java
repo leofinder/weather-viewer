@@ -1,5 +1,6 @@
 package com.craftelix.weatherviewer.service;
 
+import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.PasswordMismatchException;
@@ -36,8 +37,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getUserBySessionId(UUID sessionId) {
-        return userRepository.findBySessionId(sessionId)
+    public UserDto getUserBySessionId(UUID sessionId) {
+        User user = userRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new SessionNotFoundException(String.format("User not found by session id %s", sessionId)));
+        return userMapper.toDto(user);
     }
 }

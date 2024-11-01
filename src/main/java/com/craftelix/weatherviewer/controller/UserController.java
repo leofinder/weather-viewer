@@ -1,9 +1,9 @@
 package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.SessionDto;
-import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
-import com.craftelix.weatherviewer.entity.User;
+import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.exception.UserValidationException;
 import com.craftelix.weatherviewer.service.AuthenticationService;
 import com.craftelix.weatherviewer.service.SessionService;
@@ -46,14 +46,14 @@ public class UserController {
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute("user") UserLoginDto userLoginDto,
                               HttpServletResponse response) {
-        User user = authenticationService.authenticate(userLoginDto);
+        UserDto user = authenticationService.authenticate(userLoginDto);
         SessionDto session = sessionService.createSession(user.getId());
 
         Cookie cookie = buildSessionIdCookie(session);
         response.addCookie(cookie);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/");
-        modelAndView.addObject("user", userLoginDto);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
@@ -66,7 +66,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ModelAndView signup(@Valid @ModelAttribute("user") UserSignupDto userSignupDto,
-                                 BindingResult bindingResult) {
+                               BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new UserValidationException(bindingResult);

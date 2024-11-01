@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
-import com.craftelix.weatherviewer.entity.User;
+import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.service.LocationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class LocationController {
     @PostMapping("")
     public ResponseEntity<Map<String, String>> addLocation(@RequestBody LocationRequestDto locationRequestDto,
                                                            HttpServletRequest request) {
-        User user = (User) request.getAttribute("user");
+        UserDto user = (UserDto) request.getAttribute("user");
         try {
             locationService.save(locationRequestDto, user);
             return ResponseEntity
@@ -39,7 +39,7 @@ public class LocationController {
     @DeleteMapping("/{locationId}")
     public ResponseEntity<Map<String, String>> removeLocation(@PathVariable("locationId") Long locationId,
                                                               HttpServletRequest request) {
-        User user = (User) request.getAttribute("user");
+        UserDto user = (UserDto) request.getAttribute("user");
         try {
             locationService.delete(locationId, user);
             return ResponseEntity

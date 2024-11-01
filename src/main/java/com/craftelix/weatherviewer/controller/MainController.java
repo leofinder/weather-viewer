@@ -1,8 +1,8 @@
 package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.LocationResponseDto;
+import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
-import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.service.LocationService;
 import com.craftelix.weatherviewer.service.WeatherService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class MainController {
 
     @GetMapping("/")
     public ModelAndView index(HttpServletRequest request) {
-        User user = (User) request.getAttribute("user");
+        UserDto user = (UserDto) request.getAttribute("user");
         List<LocationResponseDto> locations = locationService.getUserLocationsWithWeatherData(user);
 
         ModelAndView modelAndView = new ModelAndView("index");
@@ -38,7 +38,7 @@ public class MainController {
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(name = "name") String name,
                                HttpServletRequest request) {
-        User user = (User) request.getAttribute("user");
+        UserDto user = (UserDto) request.getAttribute("user");
         List<LocationApiDto> locations = weatherService.findLocationsByName(name);
         locations = locationService.markLocationsAsAddedForUser(locations, user);
 
