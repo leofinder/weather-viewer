@@ -8,6 +8,7 @@ import com.craftelix.weatherviewer.exception.UserValidationException;
 import com.craftelix.weatherviewer.service.AuthenticationService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
+import com.craftelix.weatherviewer.util.CookiesUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -49,7 +48,7 @@ public class UserController {
         UserDto user = authenticationService.authenticate(userLoginDto);
         SessionDto session = sessionService.createSession(user.getId());
 
-        Cookie cookie = buildSessionIdCookie(session);
+        Cookie cookie  = CookiesUtil.createCookie(CookiesUtil.SESSION_ID, session.getId().toString(), session.getExpiresAt());
         response.addCookie(cookie);
 
         return "redirect:/";
@@ -82,23 +81,11 @@ public class UserController {
                          HttpServletResponse response) {
         if (!sessionId.isBlank()) {
             sessionService.removeSession(UUID.fromString(sessionId));
-            // TODO
-            Cookie sessionIdCookie = new Cookie("sessionId", "");
-            sessionIdCookie.setMaxAge(0);
-            response.addCookie(sessionIdCookie);
+
+            Cookie cookie  = CookiesUtil.createCookieToDelete(CookiesUtil.SESSION_ID);
+            response.addCookie(cookie);
         }
         return "redirect:/login";
-    }
-
-    private Cookie buildSessionIdCookie(SessionDto session) {
-        Cookie cookie = new Cookie("sessionId", session.getId().toString());
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-
-        long maxAge = Duration.between(LocalDateTime.now(), session.getExpiresAt()).getSeconds();
-        cookie.setMaxAge((int) maxAge);
-
-        return cookie;
     }
 
 }

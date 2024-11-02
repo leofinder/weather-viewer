@@ -3,6 +3,7 @@ package com.craftelix.weatherviewer.filter;
 import com.craftelix.weatherviewer.entity.Session;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
+import com.craftelix.weatherviewer.util.CookiesUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +22,6 @@ import java.util.UUID;
 @Slf4j
 @Component
 public class SessionFilter extends OncePerRequestFilter {
-
-    private static final String SESSION_ID = "sessionId";
 
     private final SessionService sessionService;
 
@@ -50,6 +49,8 @@ public class SessionFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             sessionService.removeSession(sessionId);
+            Cookie cookie = CookiesUtil.createCookieToDelete(CookiesUtil.SESSION_ID);
+            response.addCookie(cookie);
             response.sendRedirect("/login");
         }
     }
@@ -71,7 +72,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
         if (cookies != null) {
             sessionCookie = Arrays.stream(cookies)
-                    .filter(cookie -> SESSION_ID.equals(cookie.getName()))
+                    .filter(cookie -> CookiesUtil.SESSION_ID.equals(cookie.getName()))
                     .findFirst();
         }
 
