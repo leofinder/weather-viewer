@@ -5,7 +5,7 @@ import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.exception.UserValidationException;
-import com.craftelix.weatherviewer.service.AuthenticationService;
+import com.craftelix.weatherviewer.service.AuthService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
 import com.craftelix.weatherviewer.util.CookiesUtil;
@@ -29,7 +29,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthService authService;
 
     private final UserService userService;
 
@@ -45,7 +45,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@ModelAttribute("user") UserLoginDto userLoginDto,
                               HttpServletResponse response) {
-        UserDto user = authenticationService.authenticate(userLoginDto);
+        UserDto user = authService.authenticate(userLoginDto);
         SessionDto session = sessionService.createSession(user.getId());
 
         Cookie cookie  = CookiesUtil.createCookie(CookiesUtil.SESSION_ID, session.getId().toString(), session.getExpiresAt());
