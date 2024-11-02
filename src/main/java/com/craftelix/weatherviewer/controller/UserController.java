@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute("user") UserLoginDto userLoginDto,
+    public String login(@ModelAttribute("user") UserLoginDto userLoginDto,
                               HttpServletResponse response) {
         UserDto user = authenticationService.authenticate(userLoginDto);
         SessionDto session = sessionService.createSession(user.getId());
@@ -52,9 +52,7 @@ public class UserController {
         Cookie cookie = buildSessionIdCookie(session);
         response.addCookie(cookie);
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
