@@ -15,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,8 +34,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Optional<Cookie> sessionCookie = getSessionCookie(request);
-
+        Optional<Cookie> sessionCookie = CookiesUtil.findCookie(request.getCookies(), CookiesUtil.SESSION_ID);
         if (sessionCookie.isEmpty()) {
             response.sendRedirect("/login");
             return;
@@ -63,20 +61,6 @@ public class SessionFilter extends OncePerRequestFilter {
             shouldFilter = false;
         }
         return !shouldFilter;
-    }
-
-    private Optional<Cookie> getSessionCookie(HttpServletRequest httpRequest) {
-        Optional<Cookie> sessionCookie = Optional.empty();
-
-        Cookie[] cookies = httpRequest.getCookies();
-
-        if (cookies != null) {
-            sessionCookie = Arrays.stream(cookies)
-                    .filter(cookie -> CookiesUtil.SESSION_ID.equals(cookie.getName()))
-                    .findFirst();
-        }
-
-        return sessionCookie;
     }
 
     private boolean isSessionValid(UUID sessionId) {

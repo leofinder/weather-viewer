@@ -5,6 +5,8 @@ import lombok.experimental.UtilityClass;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Optional;
 
 @UtilityClass
 public class CookiesUtil {
@@ -26,6 +28,18 @@ public class CookiesUtil {
         Cookie cookie = new Cookie(key, null);
         cookie.setPath("/");
         cookie.setMaxAge(0);
+        return cookie;
+    }
+
+    public static Optional<Cookie> findCookie(Cookie[] cookies, String key) {
+        Optional<Cookie> cookie = Optional.empty();
+
+        if (cookies != null && key != null) {
+            cookie = Arrays.stream(cookies)
+                    .filter(c -> key.equals(c.getName()))
+                    .findFirst();
+        }
+
         return cookie;
     }
 }
