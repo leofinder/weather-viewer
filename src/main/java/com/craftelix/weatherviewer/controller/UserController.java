@@ -57,7 +57,7 @@ public class UserController {
 
     @GetMapping("/signup")
     public ModelAndView showSignupForm() {
-        ModelAndView modelAndView = new ModelAndView("/signup");
+        ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new UserSignupDto());
         return modelAndView;
     }
@@ -72,7 +72,7 @@ public class UserController {
 
         userService.save(userSignupDto);
 
-        ModelAndView modelAndView = new ModelAndView("/signup");
+        ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("successMessage", "User registered successfully. Go to sign in page.");
         return modelAndView;
     }
