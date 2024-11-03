@@ -88,6 +88,9 @@
     font-family: monospace;
 }
 
+.coordinate-value {
+    text-align: right;
+}
 
 .badge {
     font-weight: normal;
