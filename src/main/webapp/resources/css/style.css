@@ -63,7 +63,7 @@
 .flex-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
 }
 
@@ -74,7 +74,7 @@
 .location-card {
     flex: 0 0 350px;
     width: 350px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     transition: transform 0.2s, box-shadow 0.2s;
     border-radius: 8px;
 }
