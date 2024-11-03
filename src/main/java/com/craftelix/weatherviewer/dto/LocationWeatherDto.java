@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationResponseDto {
+public class LocationWeatherDto {
 
     private Long id;
 
