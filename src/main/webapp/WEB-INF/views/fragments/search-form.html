@@ -6,10 +6,10 @@
 </head>
 <body>
 
-<form th:fragment="search-form" method="get" th:action="@{/search}" class="search-container mb-4">
+<form th:fragment="search-form" method="get" th:action="@{/search}" class="search-container mb-3">
     <div class="search-wrapper">
         <input type="text" class="search-input" id="locationSearch" placeholder="Search location..." name="name" required>
-        <button class="search-button" onclick="searchLocation()">
+        <button class="search-button">
             <i class="fas fa-search"></i>
         </button>
     </div>
