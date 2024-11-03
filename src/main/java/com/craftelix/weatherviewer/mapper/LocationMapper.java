@@ -2,7 +2,6 @@ package com.craftelix.weatherviewer.mapper;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.LocationWeatherDto;
-import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,13 +15,6 @@ public interface LocationMapper {
 
     @Mapping(target = "id", ignore = true)
     Location toEntity(LocationRequestDto locationRequestDto);
-
-    @Mapping(target = "id", ignore = true)
-    Location toEntity(LocationApiDto locationApiDto);
-
-    LocationApiDto toDto(Location location);
-
-    List<LocationApiDto> toApiDto(List<Location> locations);
 
     List<LocationWeatherDto> toDto(List<Location> locations);
 }

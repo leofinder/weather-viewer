@@ -6,6 +6,7 @@ import com.craftelix.weatherviewer.dto.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
+import com.craftelix.weatherviewer.mapper.LocationApiMapper;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
 import com.craftelix.weatherviewer.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class LocationService {
     private final WeatherService weatherService;
 
     private final LocationMapper locationMapper;
+
+    private final LocationApiMapper locationApiMapper;
 
     public void save(LocationRequestDto locationRequestDto, UserDto user) {
         Location location = locationMapper.toEntity(locationRequestDto);
@@ -66,7 +69,7 @@ public class LocationService {
     }
 
     private LocationWithUserStatusDto getLocationWithUserStatus(LocationApiDto locationApiDto,  List<Location> userLocations, UserDto user) {
-        Location location = locationMapper.toEntity(locationApiDto);
+        Location location = locationApiMapper.toEntity(locationApiDto);
         location.setUserId(user.getId());
 
         return LocationWithUserStatusDto.builder()
