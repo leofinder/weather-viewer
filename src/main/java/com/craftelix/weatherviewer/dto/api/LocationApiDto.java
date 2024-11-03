@@ -28,5 +28,4 @@ public class LocationApiDto {
 
     private String state;
 
-    private boolean isAdded;
 }

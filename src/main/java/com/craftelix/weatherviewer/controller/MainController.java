@@ -1,6 +1,7 @@
 package com.craftelix.weatherviewer.controller;
 
 import com.craftelix.weatherviewer.dto.LocationResponseDto;
+import com.craftelix.weatherviewer.dto.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.service.LocationService;
@@ -39,12 +40,12 @@ public class MainController {
     public ModelAndView search(@RequestParam(name = "name") String name,
                                HttpServletRequest request) {
         UserDto user = (UserDto) request.getAttribute("user");
-        List<LocationApiDto> locations = weatherService.findLocationsByName(name);
-        locations = locationService.markLocationsAsAddedForUser(locations, user);
+        List<LocationApiDto> locationsApiDto = weatherService.findLocationsByName(name);
+        List<LocationWithUserStatusDto> locationsWithUserStatus = locationService.setUserStatusForLocations(locationsApiDto, user);
 
         ModelAndView modelAndView = new ModelAndView("search");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("locations", locations);
+        modelAndView.addObject("locations", locationsWithUserStatus);
         return modelAndView;
     }
 

@@ -2,6 +2,7 @@ package com.craftelix.weatherviewer.service;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.LocationResponseDto;
+import com.craftelix.weatherviewer.dto.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -51,14 +53,25 @@ public class LocationService {
         return locationMapper.toDto(userLocations);
     }
 
-    public List<LocationApiDto> markLocationsAsAddedForUser(List<LocationApiDto> locationsDto, UserDto user) {
+    public List<LocationWithUserStatusDto> setUserStatusForLocations(List<LocationApiDto> locationsApiDto, UserDto user) {
+        List<LocationWithUserStatusDto> locationsWithUserStatusDto = new ArrayList<>();
         List<Location> userLocations = locationRepository.findByUserId(user.getId());
 
-        for (LocationApiDto locationApiDto : locationsDto) {
-            Location location = locationMapper.toEntity(locationApiDto);
-            location.setUserId(user.getId());
-            locationApiDto.setAdded(userLocations.contains(location));
+        for (LocationApiDto locationApiDto : locationsApiDto) {
+            LocationWithUserStatusDto locationWithUserStatusDto = getLocationWithUserStatus(locationApiDto, userLocations, user);
+            locationsWithUserStatusDto.add(locationWithUserStatusDto);
         }
-        return locationsDto;
+
+        return locationsWithUserStatusDto;
+    }
+
+    private LocationWithUserStatusDto getLocationWithUserStatus(LocationApiDto locationApiDto,  List<Location> userLocations, UserDto user) {
+        Location location = locationMapper.toEntity(locationApiDto);
+        location.setUserId(user.getId());
+
+        return LocationWithUserStatusDto.builder()
+                .location(locationApiDto)
+                .isAdded(userLocations.contains(location))
+                .build();
     }
 }
