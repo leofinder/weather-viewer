@@ -15,6 +15,10 @@ function addLocation(button) {
         body: JSON.stringify(data)
     })
         .then(response => {
+            if (response.status === 401) {
+                window.location.href = '/login';
+                return;
+            }
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -47,6 +51,10 @@ function removeLocation(button) {
         }
     })
         .then(response => {
+            if (response.status === 401) {
+                window.location.href = '/login';
+                return;
+            }
             if (response.ok) {
                 const card = button.closest('.location-card');
                 if (card) {

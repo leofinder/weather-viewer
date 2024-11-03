@@ -34,9 +34,11 @@ public class SessionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        boolean isApiRequest = isApiRequest(request);
+
         Optional<Cookie> sessionCookie = CookiesUtil.findCookie(request.getCookies(), CookiesUtil.SESSION_ID);
         if (sessionCookie.isEmpty()) {
-            response.sendRedirect("/login");
+            handleUnauthorized(request, response, isApiRequest);
             return;
         }
 
@@ -49,7 +51,7 @@ public class SessionFilter extends OncePerRequestFilter {
             sessionService.removeSession(sessionId);
             Cookie cookie = CookiesUtil.createCookieToDelete(CookiesUtil.SESSION_ID);
             response.addCookie(cookie);
-            response.sendRedirect("/login");
+            handleUnauthorized(request, response, isApiRequest);
         }
     }
 
@@ -73,6 +75,28 @@ public class SessionFilter extends OncePerRequestFilter {
         }
 
         return isValid;
+    }
+
+    private boolean isApiRequest(HttpServletRequest request) {
+        String requestedWith = request.getHeader("X-Requested-With");
+        String acceptHeader = request.getHeader("Accept");
+        String contentType = request.getHeader("Content-Type");
+
+        return "XMLHttpRequest".equals(requestedWith)
+                || (acceptHeader != null && acceptHeader.contains("application/json"))
+                || (contentType != null && contentType.contains("application/json"))
+                || request.getRequestURI().startsWith("/api/");
+    }
+
+    private void handleUnauthorized(HttpServletRequest request, HttpServletResponse response, boolean isApiRequest) throws IOException {
+        if (isApiRequest) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Please login\"}");
+        } else {
+            response.setStatus(HttpServletResponse.SC_FOUND);
+            response.sendRedirect("/login");
+        }
     }
 
 }
