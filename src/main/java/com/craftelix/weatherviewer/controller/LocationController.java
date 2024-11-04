@@ -24,32 +24,28 @@ public class LocationController {
     public ResponseEntity<Map<String, String>> addLocation(@RequestBody LocationRequestDto locationRequestDto,
                                                            HttpServletRequest request) {
         UserDto user = (UserDto) request.getAttribute("user");
-        try {
-            locationService.save(locationRequestDto, user);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(Map.of("message", "Success"));
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", e.getMessage()));
-        }
+        locationService.save(locationRequestDto, user);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("message", "Success"));
     }
 
     @DeleteMapping("/{locationId}")
     public ResponseEntity<Map<String, String>> removeLocation(@PathVariable("locationId") Long locationId,
                                                               HttpServletRequest request) {
         UserDto user = (UserDto) request.getAttribute("user");
-        try {
-            locationService.delete(locationId, user);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(Map.of("message", "Success"));
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", e.getMessage()));
-        }
+        locationService.delete(locationId, user);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(Map.of("message", "Success"));
+
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("message", ex.getMessage()));
     }
 
 }
