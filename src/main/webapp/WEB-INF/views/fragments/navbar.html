@@ -19,7 +19,9 @@
                     <a class="nav-link" th:text="${user.username}">Username</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/logout}">Log out</a>
+                    <a class="nav-link logout-btn" th:href="@{/logout}">
+                        <i class="fas fa-sign-out-alt"></i> Log out
+                    </a>
                 </li>
             </ul>
         </div>
