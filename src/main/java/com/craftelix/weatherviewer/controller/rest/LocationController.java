@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.controller;
+package com.craftelix.weatherviewer.controller.rest;
 
 import com.craftelix.weatherviewer.dto.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.UserDto;

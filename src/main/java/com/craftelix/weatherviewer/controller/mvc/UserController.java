@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.controller;
+package com.craftelix.weatherviewer.controller.mvc;
 
 import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserDto;
