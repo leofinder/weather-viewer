@@ -72,7 +72,7 @@ public class UserController {
         userService.save(userSignupDto);
 
         ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("successMessage", "User registered successfully. Go to sign in page.");
+        modelAndView.addObject("successMessage", "User registered successfully. Go to log in page.");
         return modelAndView;
     }
 
