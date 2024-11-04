@@ -20,28 +20,24 @@ function addLocation(button) {
                 return;
             }
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error();
             }
-            return response.json();
-        })
-        .then(data => {
-            const switchContainer = button.closest('[class*="action-container"]');
-            switchContainer.setAttribute('th:switch', 'true');
             button.style.display = 'none';
-            const badge = switchContainer.querySelector('.badge');
-            if (badge) {
-                badge.style.display = 'block';
-            }
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-warning bg-opacity-25 text-warning-emphasis px-3 py-2 d-block w-100';
+            badge.style.fontSize = '0.875rem';
+            badge.innerHTML = '<i class="fas fa-star me-1"></i>Added';
+            const actionContainer = button.closest('.action-container');
+            actionContainer.appendChild(badge);
             console.log('Location added successfully');
         })
         .catch(error => {
-            console.error('Error adding location:', error);
-            showErrorNotification('Failed to add location');
+            console.error('Error adding location:', data.name);
+            showErrorNotification('Unable to save location. Please try again in a few minutes.');
         });
 }
 
 function removeLocation(button) {
-    const locationName = button.getAttribute('data-name');
     const locationId = button.getAttribute('data-id');
 
     fetch(`/api/locations/${locationId}`, {
@@ -55,17 +51,18 @@ function removeLocation(button) {
                 window.location.href = '/login';
                 return;
             }
-            if (response.ok) {
-                const card = button.closest('.location-card');
-                if (card) {
-                    card.remove();
-                }
-            } else {
-                console.error('Failed to remove location');
+            if (!response.ok) {
+                throw new Error();
             }
+            const card = button.closest('.location-card');
+            if (card) {
+                card.remove();
+            }
+            console.log('Location removed successfully');
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error remove location:', locationId);
+            showErrorNotification("Unable to remove location. Please try again in a few minutes.");
         });
 }
 
