@@ -8,6 +8,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,8 @@ public class SessionFilter extends OncePerRequestFilter {
         UUID sessionId = UUID.fromString(sessionCookie.get().getValue());
 
         if (isSessionValid(sessionId)) {
-            request.setAttribute("user", userService.getUserBySessionId(sessionId));
+            HttpSession session = request.getSession();
+            session.setAttribute("user", userService.getUserBySessionId(sessionId));
             filterChain.doFilter(request, response);
         } else {
             sessionService.removeSession(sessionId);

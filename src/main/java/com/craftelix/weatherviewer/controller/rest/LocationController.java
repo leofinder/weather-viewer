@@ -23,7 +23,7 @@ public class LocationController {
     @PostMapping("")
     public ResponseEntity<Map<String, String>> addLocation(@RequestBody LocationRequestDto locationRequestDto,
                                                            HttpServletRequest request) {
-        UserDto user = (UserDto) request.getAttribute("user");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
         locationService.save(locationRequestDto, user);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -33,7 +33,7 @@ public class LocationController {
     @DeleteMapping("/{locationId}")
     public ResponseEntity<Map<String, String>> removeLocation(@PathVariable("locationId") Long locationId,
                                                               HttpServletRequest request) {
-        UserDto user = (UserDto) request.getAttribute("user");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
         locationService.delete(locationId, user);
         return ResponseEntity
                 .status(HttpStatus.OK)

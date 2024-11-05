@@ -27,7 +27,7 @@ public class MainController {
 
     @GetMapping("/")
     public ModelAndView index(HttpServletRequest request) {
-        UserDto user = (UserDto) request.getAttribute("user");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
         List<LocationWeatherDto> locations = locationService.getUserLocationsWithWeatherData(user);
 
         ModelAndView modelAndView = new ModelAndView("index");
@@ -39,7 +39,7 @@ public class MainController {
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(name = "name") String name,
                                HttpServletRequest request) {
-        UserDto user = (UserDto) request.getAttribute("user");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
         List<LocationApiDto> locationsApiDto = weatherService.findLocationsByName(name);
         List<LocationWithUserStatusDto> locationsWithUserStatus = locationService.setUserStatusForLocations(locationsApiDto, user);
 
