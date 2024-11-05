@@ -38,8 +38,11 @@ public class LocationService {
     }
 
     public void delete(Long id, UserDto user) {
-        locationRepository.findByIdAndUserId(id, user.getId()).ifPresent(
-                locationRepository::delete
+        locationRepository.findByIdAndUserId(id, user.getId()).ifPresentOrElse(
+                locationRepository::delete,
+                () -> {
+                    throw new RuntimeException("Cannot perform operation: invalid input parameters");
+                }
         );
     }
 
