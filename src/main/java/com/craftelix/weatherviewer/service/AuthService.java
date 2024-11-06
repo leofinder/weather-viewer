@@ -24,7 +24,7 @@ public class AuthService {
     private final UserMapper userMapper;
 
     public UserDto authenticate(UserLoginDto userLoginDto) {
-        User user = userRepository.findByUsername(userLoginDto.getUsername().trim())
+        User user = userRepository.findByUsername(userLoginDto.getUsername().trim().toLowerCase())
                 .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername())));
 
         if (!PasswordHashing.checkPassword(userLoginDto.getPassword(), user.getPassword())) {
