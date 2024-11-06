@@ -11,6 +11,8 @@ import com.craftelix.weatherviewer.repository.UserRepository;
 import com.craftelix.weatherviewer.util.PasswordHashing;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +30,20 @@ public class UserService {
 
     public void save(UserSignupDto userSignupDto) {
         User user = userMapper.toEntity(userSignupDto);
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UserAlreadyExistException(String.format("User %s already exists", user.getUsername()));
-        } else if (!userSignupDto.getPassword().equals(userSignupDto.getConfirmPassword())) {
+        if (!userSignupDto.getPassword().equals(userSignupDto.getConfirmPassword())) {
             throw new PasswordMismatchException("Password and confirm password do not match");
         }
         user.setPassword(PasswordHashing.hashPassword(user.getPassword()));
-        userRepository.save(user);
+
+        try {
+            userRepository.save(user);
+        } catch (DbActionExecutionException e) {
+            if (e.getCause() instanceof DuplicateKeyException) {
+                throw new UserAlreadyExistException(String.format("User %s already exists", user.getUsername()));
+            }
+            throw new RuntimeException(e);
+        }
+
     }
 
     public UserDto getUserBySessionId(UUID sessionId) {
