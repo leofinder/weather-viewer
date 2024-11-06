@@ -12,8 +12,6 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    boolean existsByUsername(String username);
-
     Optional<User> findByUsername(String username);
 
     @Query("""
