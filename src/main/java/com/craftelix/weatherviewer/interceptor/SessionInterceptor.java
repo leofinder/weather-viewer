@@ -1,18 +1,17 @@
-package com.craftelix.weatherviewer.filter;
+package com.craftelix.weatherviewer.interceptor;
 
 import com.craftelix.weatherviewer.entity.Session;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
 import com.craftelix.weatherviewer.util.CookiesUtil;
-import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -21,26 +20,21 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class SessionFilter extends OncePerRequestFilter {
+@RequiredArgsConstructor
+public class SessionInterceptor implements HandlerInterceptor {
 
     private final SessionService sessionService;
 
     private final UserService userService;
 
-    @Autowired
-    public SessionFilter(SessionService sessionService, UserService userService) {
-        this.sessionService = sessionService;
-        this.userService = userService;
-    }
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean isApiRequest = isApiRequest(request);
 
         Optional<Cookie> sessionCookie = CookiesUtil.findCookie(request.getCookies(), CookiesUtil.SESSION_ID);
         if (sessionCookie.isEmpty()) {
             handleUnauthorized(request, response, isApiRequest);
-            return;
+            return false;
         }
 
         UUID sessionId = UUID.fromString(sessionCookie.get().getValue());
@@ -48,35 +42,19 @@ public class SessionFilter extends OncePerRequestFilter {
         if (isSessionValid(sessionId)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", userService.getUserBySessionId(sessionId));
-            filterChain.doFilter(request, response);
+            return true;
         } else {
             sessionService.removeSession(sessionId);
             Cookie cookie = CookiesUtil.createCookieToDelete(CookiesUtil.SESSION_ID);
             response.addCookie(cookie);
             handleUnauthorized(request, response, isApiRequest);
+            return false;
         }
-    }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        boolean shouldFilter = true;
-        String path = request.getRequestURI();
-        if ("/login".equals(path) || "/logout".equals(path) || "/signup".equals(path) || path.contains("/resources/")) {
-            shouldFilter = false;
-        }
-        return !shouldFilter;
     }
 
     private boolean isSessionValid(UUID sessionId) {
-        boolean isValid = false;
-
         Session session = sessionService.findSession(sessionId);
-        LocalDateTime expiresAt = session.getExpiresAt();
-        if (expiresAt.isAfter(LocalDateTime.now())) {
-            isValid = true;
-        }
-
-        return isValid;
+        return session != null && session.getExpiresAt().isAfter(LocalDateTime.now());
     }
 
     private boolean isApiRequest(HttpServletRequest request) {
@@ -100,5 +78,4 @@ public class SessionFilter extends OncePerRequestFilter {
             response.sendRedirect("/login");
         }
     }
-
 }

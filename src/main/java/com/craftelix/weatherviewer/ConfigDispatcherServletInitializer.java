@@ -1,11 +1,9 @@
 package com.craftelix.weatherviewer;
 
 import com.craftelix.weatherviewer.config.WebConfig;
-import jakarta.servlet.Filter;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 @Slf4j
@@ -23,11 +21,6 @@ public class ConfigDispatcherServletInitializer extends AbstractAnnotationConfig
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
-    }
-
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[] {new DelegatingFilterProxy("sessionFilter") };
     }
 
     @Override
