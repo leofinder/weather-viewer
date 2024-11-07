@@ -21,10 +21,16 @@
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Username" required>
+                <ul>
+                    <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="text-danger mt-1" />
+                </ul>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Password" required>
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="text-danger mt-1" />
+                </ul>
             </div>
             <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirm Password</label>

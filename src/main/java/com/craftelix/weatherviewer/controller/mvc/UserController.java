@@ -4,7 +4,6 @@ import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
-import com.craftelix.weatherviewer.exception.UserValidationException;
 import com.craftelix.weatherviewer.service.AuthService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
@@ -66,7 +65,9 @@ public class UserController {
                                BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            throw new UserValidationException(bindingResult);
+            ModelAndView modelAndView = new ModelAndView("signup");
+            modelAndView.addObject("user", userSignupDto);
+            return modelAndView;
         }
 
         userService.save(userSignupDto);
