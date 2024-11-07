@@ -4,6 +4,7 @@ import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ControllerAdvice
+@Order(2)
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({UserAlreadyExistException.class, PasswordMismatchException.class})
