@@ -6,6 +6,7 @@ import com.craftelix.weatherviewer.dto.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
+import com.craftelix.weatherviewer.exception.BadRequestException;
 import com.craftelix.weatherviewer.mapper.LocationApiMapper;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
 import com.craftelix.weatherviewer.repository.LocationRepository;
@@ -41,7 +42,7 @@ public class LocationService {
         locationRepository.findByIdAndUserId(id, user.getId()).ifPresentOrElse(
                 locationRepository::delete,
                 () -> {
-                    throw new RuntimeException("Cannot perform operation: invalid input parameters");
+                    throw new BadRequestException("Cannot perform operation: invalid input parameters");
                 }
         );
     }

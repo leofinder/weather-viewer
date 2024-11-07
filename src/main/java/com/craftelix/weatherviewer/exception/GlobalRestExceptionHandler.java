@@ -23,5 +23,12 @@ public class GlobalRestExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", errors));
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Map<String, String>> handleBadRequestException(BadRequestException ex) {
+      return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", ex.getMessage()));
+    }
 }
 
