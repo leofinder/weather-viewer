@@ -8,7 +8,8 @@
 
 <form th:fragment="search-form" method="get" th:action="@{/search}" class="search-container mb-3">
     <div class="search-wrapper">
-        <input type="text" class="search-input" id="locationSearch" placeholder="Search location..." name="name" required>
+        <label for="locationSearch" class="visually-hidden">Search location:</label>
+        <input type="text" th:value="${name}" class="search-input" id="locationSearch" placeholder="Search location..." name="name" required>
         <button class="search-button">
             <i class="fas fa-search"></i>
         </button>

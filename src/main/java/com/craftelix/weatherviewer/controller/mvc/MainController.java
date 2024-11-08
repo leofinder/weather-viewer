@@ -44,6 +44,7 @@ public class MainController {
         List<LocationWithUserStatusDto> locationsWithUserStatus = locationService.setUserStatusForLocations(locationsApiDto, user);
 
         ModelAndView modelAndView = new ModelAndView("search");
+        modelAndView.addObject("name", name);
         modelAndView.addObject("user", user);
         modelAndView.addObject("locations", locationsWithUserStatus);
         return modelAndView;
