@@ -78,7 +78,7 @@ public class UserController {
             return modelAndView;
         }
 
-        modelAndView.addObject("successMessage", "User registered successfully. Go to log in page.");
+        modelAndView.addObject("successMessage", "Sign-up complete. Please proceed to the login page.");
         return modelAndView;
     }
 
