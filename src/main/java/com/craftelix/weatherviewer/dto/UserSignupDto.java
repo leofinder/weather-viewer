@@ -1,5 +1,6 @@
 package com.craftelix.weatherviewer.dto;
 
+import com.craftelix.weatherviewer.validation.PasswordMatches;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@PasswordMatches
 public class UserSignupDto {
 
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")

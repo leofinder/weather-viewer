@@ -4,6 +4,7 @@ import com.craftelix.weatherviewer.dto.SessionDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.exception.UserAlreadyExistException;
 import com.craftelix.weatherviewer.service.AuthService;
 import com.craftelix.weatherviewer.service.SessionService;
 import com.craftelix.weatherviewer.service.UserService;
@@ -64,15 +65,19 @@ public class UserController {
     public ModelAndView signup(@Valid @ModelAttribute("user") UserSignupDto userSignupDto,
                                BindingResult bindingResult) {
 
+        ModelAndView modelAndView = new ModelAndView("signup");
+
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("signup");
-            modelAndView.addObject("user", userSignupDto);
             return modelAndView;
         }
 
-        userService.save(userSignupDto);
+        try {
+            userService.save(userSignupDto);
+        } catch (UserAlreadyExistException e) {
+            bindingResult.reject("userExists", e.getMessage());
+            return modelAndView;
+        }
 
-        ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("successMessage", "User registered successfully. Go to log in page.");
         return modelAndView;
     }

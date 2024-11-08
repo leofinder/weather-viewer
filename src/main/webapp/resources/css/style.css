@@ -28,6 +28,10 @@
     max-width: 500px;
 }
 
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
 .container {
     margin-top: 80px;
 }

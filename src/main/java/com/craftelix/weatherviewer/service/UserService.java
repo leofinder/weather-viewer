@@ -3,7 +3,6 @@ package com.craftelix.weatherviewer.service;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
 import com.craftelix.weatherviewer.entity.User;
-import com.craftelix.weatherviewer.exception.PasswordMismatchException;
 import com.craftelix.weatherviewer.exception.SessionNotFoundException;
 import com.craftelix.weatherviewer.exception.UserAlreadyExistException;
 import com.craftelix.weatherviewer.mapper.UserMapper;
@@ -30,16 +29,13 @@ public class UserService {
 
     public void save(UserSignupDto userSignupDto) {
         User user = userMapper.toEntity(userSignupDto);
-        if (!userSignupDto.getPassword().equals(userSignupDto.getConfirmPassword())) {
-            throw new PasswordMismatchException("Password and confirm password do not match");
-        }
         user.setPassword(PasswordHashing.hashPassword(user.getPassword()));
 
         try {
             userRepository.save(user);
         } catch (DbActionExecutionException e) {
             if (e.getCause() instanceof DuplicateKeyException) {
-                throw new UserAlreadyExistException(String.format("User %s already exists", user.getUsername()));
+                throw new UserAlreadyExistException(String.format("User %s already exists", userSignupDto.getUsername()));
             }
             throw new RuntimeException(e);
         }

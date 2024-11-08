@@ -1,7 +1,6 @@
 package com.craftelix.weatherviewer.exception;
 
 import com.craftelix.weatherviewer.dto.UserLoginDto;
-import com.craftelix.weatherviewer.dto.UserSignupDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -16,14 +15,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 @Order(2)
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler({UserAlreadyExistException.class, PasswordMismatchException.class})
-    public ModelAndView handleRegisterExceptions(final Exception ex, final HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("user", new UserSignupDto(request.getParameter("username"), "", ""));
-        modelAndView.addObject("errorMessage", ex.getMessage());
-        return modelAndView;
-    }
 
     @ExceptionHandler({UserNotFoundException.class, InvalidPasswordException.class})
     public ModelAndView handleAuthenticationExceptions(final Exception ex, final HttpServletRequest request) {
