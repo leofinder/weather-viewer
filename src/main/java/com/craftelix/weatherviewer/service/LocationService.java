@@ -3,7 +3,7 @@ package com.craftelix.weatherviewer.service;
 import com.craftelix.weatherviewer.dto.location.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.location.LocationWeatherDto;
 import com.craftelix.weatherviewer.dto.location.LocationWithUserStatusDto;
-import com.craftelix.weatherviewer.dto.UserDto;
+import com.craftelix.weatherviewer.dto.user.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
 import com.craftelix.weatherviewer.exception.BadRequestException;

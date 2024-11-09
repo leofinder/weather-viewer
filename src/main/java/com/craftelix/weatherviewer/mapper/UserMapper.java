@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.mapper;
 
-import com.craftelix.weatherviewer.dto.UserDto;
-import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.dto.user.UserDto;
+import com.craftelix.weatherviewer.dto.user.UserSignupDto;
 import com.craftelix.weatherviewer.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,9 +1,9 @@
 package com.craftelix.weatherviewer.controller.mvc;
 
 import com.craftelix.weatherviewer.dto.session.SessionDto;
-import com.craftelix.weatherviewer.dto.UserDto;
-import com.craftelix.weatherviewer.dto.UserLoginDto;
-import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.dto.user.UserDto;
+import com.craftelix.weatherviewer.dto.user.UserLoginDto;
+import com.craftelix.weatherviewer.dto.user.UserSignupDto;
 import com.craftelix.weatherviewer.exception.UserAlreadyExistException;
 import com.craftelix.weatherviewer.service.AuthService;
 import com.craftelix.weatherviewer.service.SessionService;

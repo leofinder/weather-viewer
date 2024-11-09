@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.dto;
+package com.craftelix.weatherviewer.dto.user;
 
 import com.craftelix.weatherviewer.validation.PasswordMatches;
 import jakarta.validation.constraints.Pattern;

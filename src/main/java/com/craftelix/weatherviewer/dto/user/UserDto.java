@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.dto;
+package com.craftelix.weatherviewer.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

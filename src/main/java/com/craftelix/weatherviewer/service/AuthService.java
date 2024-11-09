@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.UserDto;
-import com.craftelix.weatherviewer.dto.UserLoginDto;
+import com.craftelix.weatherviewer.dto.user.UserDto;
+import com.craftelix.weatherviewer.dto.user.UserLoginDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.InvalidPasswordException;
 import com.craftelix.weatherviewer.exception.UserNotFoundException;

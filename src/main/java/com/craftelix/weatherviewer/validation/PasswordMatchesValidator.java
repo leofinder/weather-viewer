@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.validation;
 
-import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.dto.user.UserSignupDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

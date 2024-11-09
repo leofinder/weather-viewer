@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.UserDto;
-import com.craftelix.weatherviewer.dto.UserSignupDto;
+import com.craftelix.weatherviewer.dto.user.UserDto;
+import com.craftelix.weatherviewer.dto.user.UserSignupDto;
 import com.craftelix.weatherviewer.entity.User;
 import com.craftelix.weatherviewer.exception.SessionNotFoundException;
 import com.craftelix.weatherviewer.exception.UserAlreadyExistException;

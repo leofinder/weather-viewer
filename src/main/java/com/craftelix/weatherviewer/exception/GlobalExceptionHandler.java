@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.exception;
 
-import com.craftelix.weatherviewer.dto.UserLoginDto;
+import com.craftelix.weatherviewer.dto.user.UserLoginDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
