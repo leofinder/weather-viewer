@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.SessionDto;
+import com.craftelix.weatherviewer.dto.session.SessionDto;
 import com.craftelix.weatherviewer.entity.Session;
 import com.craftelix.weatherviewer.exception.SessionNotFoundException;
 import com.craftelix.weatherviewer.mapper.SessionMapper;

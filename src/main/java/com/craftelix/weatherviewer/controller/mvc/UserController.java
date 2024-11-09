@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.controller.mvc;
 
-import com.craftelix.weatherviewer.dto.SessionDto;
+import com.craftelix.weatherviewer.dto.session.SessionDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.UserLoginDto;
 import com.craftelix.weatherviewer.dto.UserSignupDto;
