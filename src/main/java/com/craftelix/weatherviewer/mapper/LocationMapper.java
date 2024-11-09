@@ -1,7 +1,7 @@
 package com.craftelix.weatherviewer.mapper;
 
-import com.craftelix.weatherviewer.dto.LocationRequestDto;
-import com.craftelix.weatherviewer.dto.LocationWeatherDto;
+import com.craftelix.weatherviewer.dto.location.LocationRequestDto;
+import com.craftelix.weatherviewer.dto.location.LocationWeatherDto;
 import com.craftelix.weatherviewer.entity.Location;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.dto;
+package com.craftelix.weatherviewer.dto.location;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;

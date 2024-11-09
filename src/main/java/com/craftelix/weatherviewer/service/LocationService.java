@@ -1,8 +1,8 @@
 package com.craftelix.weatherviewer.service;
 
-import com.craftelix.weatherviewer.dto.LocationRequestDto;
-import com.craftelix.weatherviewer.dto.LocationWeatherDto;
-import com.craftelix.weatherviewer.dto.LocationWithUserStatusDto;
+import com.craftelix.weatherviewer.dto.location.LocationRequestDto;
+import com.craftelix.weatherviewer.dto.location.LocationWeatherDto;
+import com.craftelix.weatherviewer.dto.location.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;

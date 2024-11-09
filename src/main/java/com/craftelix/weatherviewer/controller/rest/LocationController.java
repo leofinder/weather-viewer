@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.controller.rest;
 
-import com.craftelix.weatherviewer.dto.LocationRequestDto;
+import com.craftelix.weatherviewer.dto.location.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.UserDto;
 import com.craftelix.weatherviewer.exception.LocationValidationException;
 import com.craftelix.weatherviewer.service.LocationService;
