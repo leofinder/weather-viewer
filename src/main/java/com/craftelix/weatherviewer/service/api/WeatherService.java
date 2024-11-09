@@ -1,4 +1,4 @@
-package com.craftelix.weatherviewer.service;
+package com.craftelix.weatherviewer.service.api;
 
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.dto.api.WeatherApiDto;

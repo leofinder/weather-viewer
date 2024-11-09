@@ -5,7 +5,7 @@ import com.craftelix.weatherviewer.dto.location.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.user.UserDto;
 import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.service.LocationService;
-import com.craftelix.weatherviewer.service.WeatherService;
+import com.craftelix.weatherviewer.service.api.WeatherService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -10,6 +10,7 @@ import com.craftelix.weatherviewer.exception.BadRequestException;
 import com.craftelix.weatherviewer.mapper.LocationApiMapper;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
 import com.craftelix.weatherviewer.repository.LocationRepository;
+import com.craftelix.weatherviewer.service.api.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
