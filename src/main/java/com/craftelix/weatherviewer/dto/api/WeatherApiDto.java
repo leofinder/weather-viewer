@@ -1,6 +1,6 @@
 package com.craftelix.weatherviewer.dto.api;
 
-import com.craftelix.weatherviewer.dto.api.deserializer.WeatherApiDeserializer;
+import com.craftelix.weatherviewer.dto.api.deserializer.OpenWeatherApiDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonDeserialize(using = WeatherApiDeserializer.class)
+@JsonDeserialize(using = OpenWeatherApiDeserializer.class)
 public class WeatherApiDto {
 
     private String main;

@@ -9,13 +9,13 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
 
-public class WeatherApiDeserializer extends StdDeserializer<WeatherApiDto> {
+public class OpenWeatherApiDeserializer extends StdDeserializer<WeatherApiDto> {
 
-    public WeatherApiDeserializer() {
+    public OpenWeatherApiDeserializer() {
         this(null);
     }
 
-    protected WeatherApiDeserializer(Class<?> vc) {
+    protected OpenWeatherApiDeserializer(Class<?> vc) {
         super(vc);
     }
 
