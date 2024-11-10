@@ -1,6 +1,7 @@
 package com.craftelix.weatherviewer.dto.api;
 
 import com.craftelix.weatherviewer.dto.api.deserializer.BigDecimalFourDecimalPlacesDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationApiDto {
 
     private String name;
