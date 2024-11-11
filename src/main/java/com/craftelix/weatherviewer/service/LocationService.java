@@ -1,23 +1,24 @@
 package com.craftelix.weatherviewer.service;
 
+import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.dto.location.LocationRequestDto;
 import com.craftelix.weatherviewer.dto.location.LocationWeatherDto;
 import com.craftelix.weatherviewer.dto.location.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.user.UserDto;
-import com.craftelix.weatherviewer.dto.api.LocationApiDto;
 import com.craftelix.weatherviewer.entity.Location;
 import com.craftelix.weatherviewer.exception.BadRequestException;
-import com.craftelix.weatherviewer.mapper.LocationApiMapper;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
 import com.craftelix.weatherviewer.repository.LocationRepository;
 import com.craftelix.weatherviewer.service.api.WeatherService;
+import com.craftelix.weatherviewer.util.LocationKeyBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,8 +31,6 @@ public class LocationService {
     private final WeatherService weatherService;
 
     private final LocationMapper locationMapper;
-
-    private final LocationApiMapper locationApiMapper;
 
     public void save(LocationRequestDto locationRequestDto, UserDto user) {
         Location location = locationMapper.toEntity(locationRequestDto);
@@ -61,25 +60,18 @@ public class LocationService {
         return locationMapper.toDto(userLocations);
     }
 
-    public List<LocationWithUserStatusDto> setUserStatusForLocations(List<LocationApiDto> locationsApiDto, UserDto user) {
-        List<LocationWithUserStatusDto> locationsWithUserStatusDto = new ArrayList<>();
-        List<Location> userLocations = locationRepository.findByUserId(user.getId());
+    public List<LocationWithUserStatusDto> getLocationsWithUserStatus(List<LocationApiDto> locationsApiDto, UserDto user) {
+        List<Location> userLocations = locationRepository.findUserLocationsByParams(user.getId(), locationsApiDto);
+        Set<String> userLocationKeys = userLocations.stream()
+                .map(LocationKeyBuilder::buildLocationKey)
+                .collect(Collectors.toSet());
 
-        for (LocationApiDto locationApiDto : locationsApiDto) {
-            LocationWithUserStatusDto locationWithUserStatusDto = getLocationWithUserStatus(locationApiDto, userLocations, user);
-            locationsWithUserStatusDto.add(locationWithUserStatusDto);
-        }
-
-        return locationsWithUserStatusDto;
+        return locationsApiDto.stream()
+                .map(locationApiDto -> LocationWithUserStatusDto.builder()
+                        .location(locationApiDto)
+                        .isAdded(userLocationKeys.contains(LocationKeyBuilder.buildLocationKey(locationApiDto)))
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    private LocationWithUserStatusDto getLocationWithUserStatus(LocationApiDto locationApiDto,  List<Location> userLocations, UserDto user) {
-        Location location = locationApiMapper.toEntity(locationApiDto);
-        location.setUserId(user.getId());
-
-        return LocationWithUserStatusDto.builder()
-                .location(locationApiDto)
-                .isAdded(userLocations.contains(location))
-                .build();
-    }
 }

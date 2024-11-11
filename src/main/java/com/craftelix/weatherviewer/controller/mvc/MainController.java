@@ -41,7 +41,7 @@ public class MainController {
                                HttpServletRequest request) {
         UserDto user = (UserDto) request.getSession().getAttribute("user");
         List<LocationApiDto> locationsApiDto = weatherService.findLocationsByName(name);
-        List<LocationWithUserStatusDto> locationsWithUserStatus = locationService.setUserStatusForLocations(locationsApiDto, user);
+        List<LocationWithUserStatusDto> locationsWithUserStatus = locationService.getLocationsWithUserStatus(locationsApiDto, user);
 
         ModelAndView modelAndView = new ModelAndView("search");
         modelAndView.addObject("name", name);
