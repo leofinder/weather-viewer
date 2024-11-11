@@ -36,16 +36,36 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
     private String password;
 
     @Value("${spring.datasource.hikari.maximum-pool-size}")
-    private int poolSize;
+    private int maximumPoolSize;
+
+    @Value("${spring.datasource.hikari.minimum-idle}")
+    private int minimumIdle;
+
+    @Value("${spring.datasource.hikari.connection-timeout}")
+    private int connectionTimeout;
+
+    @Value("${spring.datasource.hikari.idle-timeout}")
+    private int idleTimeout;
+
+    @Value("${spring.datasource.hikari.max-lifetime}")
+    private int maxLifetime;
 
     @Bean
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
+
         dataSource.setDriverClassName(driverClassName);
         dataSource.setJdbcUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-        dataSource.setMaximumPoolSize(poolSize);
+
+        dataSource.setMaximumPoolSize(maximumPoolSize);
+        dataSource.setMinimumIdle(minimumIdle);
+
+        dataSource.setConnectionTimeout(connectionTimeout);
+        dataSource.setIdleTimeout(idleTimeout);
+        dataSource.setMaxLifetime(maxLifetime);
+
         return dataSource;
     }
 
