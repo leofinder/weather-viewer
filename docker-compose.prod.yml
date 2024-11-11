@@ -18,7 +18,7 @@ services:
     container_name: postgres_db
     restart: unless-stopped
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     env_file:
       - ./.env
     healthcheck:
@@ -26,3 +26,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+volumes:
+  postgres_data:
