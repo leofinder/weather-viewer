@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LocationRepository extends CrudRepository<Location, Long> {
+public interface LocationRepository extends CrudRepository<Location, Long>, LocationRepositoryCustom {
 
     Optional<Location> findByIdAndUserId(Long id, Long userId);
 
