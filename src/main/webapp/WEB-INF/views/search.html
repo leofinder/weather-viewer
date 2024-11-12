@@ -15,8 +15,13 @@
 
 <div class="container">
     <div th:insert="~{fragments/search-form :: search-form}"> </div>
-    <div class="text-center mt-4" th:if="${locations == null or #lists.isEmpty(locations)}">
+    <div class="text-center mt-4" th:if="${(locations == null or #lists.isEmpty(locations)) and errorMessage == null}">
         <p>No search results found.  Please try again</p>
+    </div>
+    <div class="container text-center mt-3">
+        <div th:if="${errorMessage}" class="alert alert-danger error-wrapper" role="alert">
+            <span th:text="${errorMessage}" class="preserve-whitespace"></span>
+        </div>
     </div>
     <div class="locations-list container">
         <div class="flex-row">

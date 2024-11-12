@@ -1,5 +1,6 @@
 package com.craftelix.weatherviewer.exception;
 
+import com.craftelix.weatherviewer.dto.user.UserDto;
 import com.craftelix.weatherviewer.dto.user.UserLoginDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,28 @@ public class GlobalExceptionHandler {
     public ModelAndView handleSessionNotFoundExceptions() {
         ModelAndView modelAndView = new ModelAndView("/login");
         modelAndView.addObject("user", new UserLoginDto());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(WeatherDataFetchException.class)
+    public ModelAndView handleWeatherDataFetchException(final WeatherDataFetchException ex, final HttpServletRequest request) {
+        log.error("Error occurred while fetching weather data: {}", ex.getMessage(), ex);
+
+        ModelAndView modelAndView = new ModelAndView("/index");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("errorMessage", "Unable to retrieve weather data at the moment.\nPlease try again later.");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(LocationSearchException.class)
+    public ModelAndView handleLocationSearchException(final LocationSearchException ex, final HttpServletRequest request) {
+        log.error("Error occurred while searching for location: {}", ex.getMessage(), ex);
+
+        ModelAndView modelAndView = new ModelAndView("/search");
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("errorMessage", "Unable to find the specified location.\nPlease verify the location name and try again.");
         return modelAndView;
     }
 

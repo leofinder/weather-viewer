@@ -79,6 +79,12 @@
     margin: 0 auto;
 }
 
+.error-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
 .flex-row {
     display: flex;
     flex-wrap: wrap;
