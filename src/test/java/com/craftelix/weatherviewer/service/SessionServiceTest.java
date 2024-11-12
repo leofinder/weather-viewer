@@ -8,6 +8,7 @@ import com.craftelix.weatherviewer.exception.SessionNotFoundException;
 import com.craftelix.weatherviewer.mapper.SessionMapperImpl;
 import com.craftelix.weatherviewer.repository.SessionRepository;
 import com.craftelix.weatherviewer.repository.UserRepository;
+import com.craftelix.weatherviewer.util.TestDataHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestJdbcConfig.class, SessionService.class, SessionRepository.class, SessionMapperImpl.class,
-                UserRepository.class})
+                UserRepository.class, TestDataHelper.class})
 @Transactional
 @TestPropertySource(properties = "session.expiration.minutes=30")
 class SessionServiceTest {
@@ -40,6 +41,9 @@ class SessionServiceTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TestDataHelper testDataHelper;
+
     @BeforeEach
     void setUp() {
         sessionRepository.deleteAll();
@@ -48,7 +52,7 @@ class SessionServiceTest {
 
     @Test
     void shouldCreateSession() {
-        User user = getUser();
+        User user = testDataHelper.createDefaultUser();
         Long userId = user.getId();
         SessionDto sessionDto = sessionService.createSession(userId);
 
@@ -62,8 +66,8 @@ class SessionServiceTest {
 
     @Test
     void shouldFindExistingSession() {
-        User user = getUser();
-        Session session = getSession(user);
+        User user = testDataHelper.createDefaultUser();
+        Session session = testDataHelper.createDefaultSession(user);
         sessionRepository.save(session);
 
         Session foundSession = sessionService.findSession(session.getId());
@@ -75,8 +79,8 @@ class SessionServiceTest {
 
     @Test
     void shouldRemoveSessionIfExists() {
-        User user = getUser();
-        Session session = getSession(user);
+        User user = testDataHelper.createDefaultUser();
+        Session session = testDataHelper.createDefaultSession(user);
         sessionRepository.save(session);
 
         UUID sessionId = session.getId();
@@ -96,19 +100,4 @@ class SessionServiceTest {
                 .isInstanceOf(SessionNotFoundException.class);
     }
 
-    private User getUser() {
-        User user = User.builder()
-                .username("testuser")
-                .password("password")
-                .build();
-        return userRepository.save(user);
-    }
-
-    private Session getSession(User user) {
-        return Session.builder()
-                .id(UUID.randomUUID())
-                .userId(user.getId())
-                .expiresAt(LocalDateTime.now().plusMinutes(10))
-                .build();
-    }
 }
