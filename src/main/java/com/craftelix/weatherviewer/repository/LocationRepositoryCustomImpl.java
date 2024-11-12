@@ -31,12 +31,12 @@ public class LocationRepositoryCustomImpl implements LocationRepositoryCustom {
                 .toList();
 
         String query = """
-            SELECT l.*
-            FROM locations l
-            WHERE l.user_id = :userId
-              AND l.name IN (:names)
-              AND l.latitude IN (:latitudes)
-              AND l.longitude IN (:longitudes)
+            SELECT locations.*
+            FROM locations
+            WHERE locations.user_id = :userId
+              AND locations.name IN (:names)
+              AND locations.latitude IN (:latitudes)
+              AND locations.longitude IN (:longitudes)
             """;
 
         return jdbcClient.sql(query)
