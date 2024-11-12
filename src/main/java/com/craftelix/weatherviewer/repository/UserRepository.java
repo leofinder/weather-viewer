@@ -15,7 +15,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     @Query("""
-            SELECT *
+            SELECT users.*
             FROM users
             JOIN sessions ON users.id = sessions.user_id
             WHERE sessions.id = :sessionId
