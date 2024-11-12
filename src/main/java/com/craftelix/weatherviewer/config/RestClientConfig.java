@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
 @Slf4j
@@ -13,6 +14,12 @@ import org.springframework.web.client.RestClient;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class RestClientConfig {
+
+    @Value("${rest-client.connection-timeout}")
+    private int connectionTimeout;
+
+    @Value("${rest-client.connection-request-timeout}")
+    private int connectionRequestTimeout;
 
     @Value("${weather.api.base-url}")
     private String baseUrl;
@@ -34,8 +41,13 @@ public class RestClientConfig {
 
     @Bean
     public RestClient restClient() {
+        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        clientHttpRequestFactory.setConnectTimeout(connectionTimeout);
+        clientHttpRequestFactory.setConnectionRequestTimeout(connectionRequestTimeout);
+
         return RestClient.builder()
                 .baseUrl(baseUrl)
+                .requestFactory(clientHttpRequestFactory)
                 .defaultHeader("Content-Type", "application/json")
                 .build();
     }
