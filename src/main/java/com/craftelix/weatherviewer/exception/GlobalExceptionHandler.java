@@ -33,9 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(WeatherDataFetchException.class)
-    public ModelAndView handleWeatherDataFetchException(final WeatherDataFetchException ex, final HttpServletRequest request) {
-        log.error("Error occurred while fetching weather data: {}", ex.getMessage(), ex);
-
+    public ModelAndView handleWeatherDataFetchException(final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/index");
         UserDto user = (UserDto) request.getSession().getAttribute("user");
         modelAndView.addObject("user", user);
@@ -44,9 +42,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(LocationSearchException.class)
-    public ModelAndView handleLocationSearchException(final LocationSearchException ex, final HttpServletRequest request) {
-        log.error("Error occurred while searching for location: {}", ex.getMessage(), ex);
-
+    public ModelAndView handleLocationSearchException(final HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/search");
         UserDto user = (UserDto) request.getSession().getAttribute("user");
         modelAndView.addObject("user", user);

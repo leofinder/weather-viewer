@@ -35,8 +35,10 @@ public class UserService {
             userRepository.save(user);
         } catch (DbActionExecutionException e) {
             if (e.getCause() instanceof DuplicateKeyException) {
+                log.warn("User '{}' already exists. Cannot complete registration.", userSignupDto.getUsername());
                 throw new UserAlreadyExistException(String.format("User %s already exists", userSignupDto.getUsername()));
             }
+            log.error("Unexpected error while saving user '{}': {}", userSignupDto.getUsername(), e.getMessage(), e);
             throw new RuntimeException(e);
         }
 
@@ -44,7 +46,10 @@ public class UserService {
 
     public UserDto getUserBySessionId(UUID sessionId) {
         User user = userRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException(String.format("User not found by session id %s", sessionId)));
+                .orElseThrow(() -> {
+                    log.warn("User not found by session id: {}", sessionId);
+                    return new SessionNotFoundException(String.format("User not found by session id %s", sessionId));
+                });
         return userMapper.toDto(user);
     }
 }

@@ -43,9 +43,12 @@ public class LocationService {
             locationRepository.save(location);
         } catch (DbActionExecutionException e) {
             if (e.getCause() instanceof DuplicateKeyException) {
+                log.warn("Duplicate location detected: '{}', latitude {}, longitude {} for user '{}'",
+                        location.getName(), location.getLatitude(), location.getLongitude(), user.getUsername());
                 throw new LocationAlreadyExistException(String.format("Location %s, latitude %s, longitude %s already exists for user %s",
                         location.getName(), location.getLatitude(), location.getLongitude(), user.getUsername()));
             }
+            log.error("Unexpected error while saving location '{}': {}", location.getName(), e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -54,6 +57,7 @@ public class LocationService {
         locationRepository.findByIdAndUserId(id, user.getId()).ifPresentOrElse(
                 locationRepository::delete,
                 () -> {
+                    log.warn("Failed to delete location: No location with id '{}' found for user '{}'", id, user.getUsername());
                     throw new BadRequestException("Cannot perform operation: invalid input parameters");
                 }
         );

@@ -25,9 +25,13 @@ public class AuthService {
 
     public UserDto authenticate(UserLoginDto userLoginDto) {
         User user = userRepository.findByUsername(userLoginDto.getUsername().trim().toLowerCase())
-                .orElseThrow(() -> new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername())));
+                .orElseThrow(() -> {
+                    log.warn("Authentication failed: User '{}' not found", userLoginDto.getUsername());
+                    return new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername()));
+                });
 
         if (!PasswordHashing.checkPassword(userLoginDto.getPassword(), user.getPassword())) {
+            log.warn("Authentication failed: Invalid password for user '{}'", userLoginDto.getUsername());
             throw new InvalidPasswordException("Invalid password");
         }
 

@@ -46,6 +46,9 @@ public class SessionService {
 
     public Session findSession(UUID id) {
         return sessionRepository.findById(id)
-                .orElseThrow(() -> new SessionNotFoundException(String.format("Session with id %s not found", id)));
+                .orElseThrow(() -> {
+                    log.warn("Session with id '{}' not found", id);
+                    return new SessionNotFoundException(String.format("Session with id %s not found", id));
+                });
     }
 }

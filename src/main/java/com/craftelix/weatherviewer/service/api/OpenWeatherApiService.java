@@ -34,9 +34,11 @@ public class OpenWeatherApiService implements WeatherService {
                         .build())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
+                    log.error("Client error ({}): Failed to find locations for city '{}'", response.getStatusCode(), city);
                     throw new LocationSearchException("Client error while searching for locations: " + response.getStatusCode());
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
+                    log.error("Server error ({}): Failed to find locations for city '{}'", response.getStatusCode(), city);
                     throw new LocationSearchException("Server error while searching for locations: " + response.getStatusCode());
                 })
                 .body(new ParameterizedTypeReference<>() { });
@@ -53,9 +55,13 @@ public class OpenWeatherApiService implements WeatherService {
                         .build())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
+                    log.error("Client error ({}): Failed to fetch weather data for coordinates: latitude={}, longitude={}",
+                            response.getStatusCode(), latitude, longitude);
                     throw new WeatherDataFetchException("Client error while fetching weather data: " + response.getStatusCode());
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
+                    log.error("Server error ({}): Failed to fetch weather data for coordinates: latitude={}, longitude={}",
+                            response.getStatusCode(), latitude, longitude);
                     throw new WeatherDataFetchException("Server error while fetching weather data: " + response.getStatusCode());
                 })
                 .body(WeatherApiDto.class);

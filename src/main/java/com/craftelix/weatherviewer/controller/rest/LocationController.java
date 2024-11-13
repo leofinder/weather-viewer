@@ -28,6 +28,7 @@ public class LocationController {
                                                            BindingResult bindingResult,
                                                            HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            log.warn("Validation failed for location request: {}", bindingResult.getAllErrors());
             throw new LocationValidationException(bindingResult);
         }
 

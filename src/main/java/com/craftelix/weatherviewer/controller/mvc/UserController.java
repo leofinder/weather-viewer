@@ -68,12 +68,14 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("signup");
 
         if (bindingResult.hasErrors()) {
+            log.warn("Validation failed for sign-up attempt: {}", bindingResult.getAllErrors());
             return modelAndView;
         }
 
         try {
             userService.save(userSignupDto);
         } catch (UserAlreadyExistException e) {
+            log.warn("Sign-up failed: User '{}' already exists. Error: {}", userSignupDto.getUsername(), e.getMessage());
             bindingResult.reject("userExists", e.getMessage());
             return modelAndView;
         }
