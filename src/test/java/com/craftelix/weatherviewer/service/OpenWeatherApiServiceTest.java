@@ -62,7 +62,7 @@ public class OpenWeatherApiServiceTest {
     }
 
     @Test
-    void testFindLocationsByName() throws JsonProcessingException {
+    void shouldFindLocationsByName() throws JsonProcessingException {
         String name = "Java";
         String responseBody = """
                 [
@@ -116,7 +116,7 @@ public class OpenWeatherApiServiceTest {
     }
 
     @Test
-    void testGetWeatherData() throws JsonProcessingException {
+    void shouldFetchWeatherData() throws JsonProcessingException {
         BigDecimal latitude = new BigDecimal("-7.3280");
         BigDecimal longitude = new BigDecimal("109.6139");
 
