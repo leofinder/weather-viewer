@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,7 +62,11 @@ public class LocationService {
     }
 
     public List<LocationWithUserStatusDto> getLocationsWithUserStatus(List<LocationApiDto> locationsApiDto, UserDto user) {
-        List<Location> userLocations = locationRepository.findUserLocationsByParams(user.getId(), locationsApiDto);
+        List<Location> userLocations = new ArrayList<>();
+        if (!locationsApiDto.isEmpty()) {
+            userLocations = locationRepository.findUserLocationsByParams(user.getId(), locationsApiDto);
+        }
+
         Set<String> userLocationKeys = userLocations.stream()
                 .map(LocationKeyBuilder::buildLocationKey)
                 .collect(Collectors.toSet());
