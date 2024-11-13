@@ -12,7 +12,6 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "username", expression = "java(userSignupDto.getUsername().toLowerCase())")
     User toEntity(UserSignupDto userSignupDto);
 
     UserDto toDto(User user);

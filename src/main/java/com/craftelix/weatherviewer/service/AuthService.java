@@ -8,6 +8,7 @@ import com.craftelix.weatherviewer.exception.UserNotFoundException;
 import com.craftelix.weatherviewer.mapper.UserMapper;
 import com.craftelix.weatherviewer.repository.UserRepository;
 import com.craftelix.weatherviewer.util.PasswordHashing;
+import com.craftelix.weatherviewer.util.UsernameUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class AuthService {
     private final UserMapper userMapper;
 
     public UserDto authenticate(UserLoginDto userLoginDto) {
-        User user = userRepository.findByUsername(userLoginDto.getUsername().trim().toLowerCase())
+        User user = userRepository.findByUsername(UsernameUtils.normalize(userLoginDto.getUsername()))
                 .orElseThrow(() -> {
                     log.warn("Authentication failed: User '{}' not found", userLoginDto.getUsername());
                     return new UserNotFoundException(String.format("User %s not found", userLoginDto.getUsername()));

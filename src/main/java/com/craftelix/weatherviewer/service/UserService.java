@@ -8,6 +8,7 @@ import com.craftelix.weatherviewer.exception.UserAlreadyExistException;
 import com.craftelix.weatherviewer.mapper.UserMapper;
 import com.craftelix.weatherviewer.repository.UserRepository;
 import com.craftelix.weatherviewer.util.PasswordHashing;
+import com.craftelix.weatherviewer.util.UsernameUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -29,6 +30,7 @@ public class UserService {
 
     public void save(UserSignupDto userSignupDto) {
         User user = userMapper.toEntity(userSignupDto);
+        user.setUsername(UsernameUtils.normalize(user.getUsername()));
         user.setPassword(PasswordHashing.hashPassword(user.getPassword()));
 
         try {
