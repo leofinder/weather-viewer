@@ -7,12 +7,15 @@ import com.craftelix.weatherviewer.dto.location.LocationWithUserStatusDto;
 import com.craftelix.weatherviewer.dto.user.UserDto;
 import com.craftelix.weatherviewer.entity.Location;
 import com.craftelix.weatherviewer.exception.BadRequestException;
+import com.craftelix.weatherviewer.exception.LocationAlreadyExistException;
 import com.craftelix.weatherviewer.mapper.LocationMapper;
 import com.craftelix.weatherviewer.repository.LocationRepository;
 import com.craftelix.weatherviewer.service.api.WeatherService;
 import com.craftelix.weatherviewer.util.LocationKeyBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +39,15 @@ public class LocationService {
     public void save(LocationRequestDto locationRequestDto, UserDto user) {
         Location location = locationMapper.toEntity(locationRequestDto);
         location.setUserId(user.getId());
-        locationRepository.save(location);
+        try {
+            locationRepository.save(location);
+        } catch (DbActionExecutionException e) {
+            if (e.getCause() instanceof DuplicateKeyException) {
+                throw new LocationAlreadyExistException(String.format("Location %s, latitude %s, longitude %s already exists for user %s",
+                        location.getName(), location.getLatitude(), location.getLongitude(), user.getUsername()));
+            }
+            throw new RuntimeException(e);
+        }
     }
 
     public void delete(Long id, UserDto user) {

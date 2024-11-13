@@ -30,5 +30,12 @@ public class GlobalRestExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", ex.getMessage()));
     }
+
+    @ExceptionHandler(LocationAlreadyExistException.class)
+    public ResponseEntity<Map<String, String>> handleLocationAlreadyExistException(LocationAlreadyExistException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(Map.of("message", ex.getMessage()));
+    }
 }
 
