@@ -20,7 +20,9 @@ function addLocation(button) {
                 return;
             }
             if (!response.ok) {
-                throw new Error();
+                return response.json().then(errorBody => {
+                    throw new Error(errorBody.message || "Unknown error occurred");
+                });
             }
             button.style.display = 'none';
             const badge = document.createElement('span');
@@ -32,8 +34,8 @@ function addLocation(button) {
             console.log('Location added successfully');
         })
         .catch(error => {
-            console.error('Error adding location:', data.name);
-            showErrorNotification('Unable to save location. Please try again in a few minutes.');
+            console.error('Error adding location:', error.message);
+            showErrorNotification(error.message || "Unable to save location. Please try again in a few minutes.");
         });
 }
 
@@ -52,7 +54,9 @@ function removeLocation(button) {
                 return;
             }
             if (!response.ok) {
-                throw new Error();
+                return response.json().then(errorBody => {
+                    throw new Error(errorBody.message || "Unknown error occurred");
+                });
             }
             const card = button.closest('.location-card');
             if (card) {
@@ -61,8 +65,8 @@ function removeLocation(button) {
             console.log('Location removed successfully');
         })
         .catch(error => {
-            console.error('Error remove location:', locationId);
-            showErrorNotification("Unable to remove location. Please try again in a few minutes.");
+            console.error('Error remove location:', error.message);
+            showErrorNotification(error.message || "Unable to remove location. Please try again later.");
         });
 }
 
