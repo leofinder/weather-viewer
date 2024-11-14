@@ -40,8 +40,8 @@ public class SessionInterceptor implements HandlerInterceptor {
         UUID sessionId = UUID.fromString(sessionCookie.get().getValue());
 
         if (isSessionValid(sessionId)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", userService.getUserBySessionId(sessionId));
+            HttpSession httpSession = request.getSession();
+            httpSession.setAttribute("user", userService.getUserBySessionId(sessionId));
             return true;
         } else {
             sessionService.removeSession(sessionId);
