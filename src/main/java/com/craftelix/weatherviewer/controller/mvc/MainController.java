@@ -37,7 +37,7 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public ModelAndView search(@RequestParam(name = "name") String name,
+    public ModelAndView search(@RequestParam(name = "name", defaultValue = "") String name,
                                HttpServletRequest request) {
         UserDto user = (UserDto) request.getSession().getAttribute("user");
         List<LocationApiDto> locationsApiDto = weatherService.findLocationsByName(name);
