@@ -1,6 +1,8 @@
 # Weather Viewer
 
 Weather Viewer is a Java-based web application for viewing weather forecasts for multiple locations. It provides a user-friendly interface to search for locations and display detailed weather information, including temperature, weather descriptions, and more.
+![weather-viewer-home](https://github.com/user-attachments/assets/55f17d3d-7fa3-46a2-a243-9ef1a6d9c9a9)
+![weather-viewer-search](https://github.com/user-attachments/assets/b68c28b6-0369-481b-a74a-edfaeaabbbef)
 
 ## Features
 
@@ -38,14 +40,14 @@ cd weather-viewer
 2. **Development Environment**:
    - Use `docker-compose.dev.yml` for development:
      ```bash
-     docker-compose -f docker-compose.dev.yml up --build
+     docker compose -f docker-compose.dev.yml up --build
      ```
    - Access the app at `http://localhost:8080`.
 
 3. **Production Environment**:
    - Use `docker-compose.prod.yml` for deployment:
      ```bash
-     docker-compose -f docker-compose.prod.yml up --build
+     docker compose -f docker-compose.prod.yml up --build
      ```
    - Access the app at your server's public IP or domain.
 
