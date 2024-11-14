@@ -16,5 +16,6 @@ public interface LocationMapper {
     @Mapping(target = "id", ignore = true)
     Location toEntity(LocationRequestDto locationRequestDto);
 
+    @Mapping(target = "weatherApi", ignore = true)
     List<LocationWeatherDto> toDto(List<Location> locations);
 }
