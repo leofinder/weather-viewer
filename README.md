@@ -1,8 +1,8 @@
 # Weather Viewer
 
 Weather Viewer is a Java-based web application for viewing weather forecasts for multiple locations. It provides a user-friendly interface to search for locations and display detailed weather information, including temperature, weather descriptions, and more.
-![weather-viewer-home](https://github.com/user-attachments/assets/55f17d3d-7fa3-46a2-a243-9ef1a6d9c9a9)
-![weather-viewer-search](https://github.com/user-attachments/assets/b68c28b6-0369-481b-a74a-edfaeaabbbef)
+![weather-viewer-home](https://github.com/user-attachments/assets/3b3f7f53-aa27-4372-a3bd-b6e52341ba84)
+![weather-viewer-search](https://github.com/user-attachments/assets/5f96d9b5-7e0c-419e-b05b-d7dcb6e6bb54)
 
 ## Features
 
