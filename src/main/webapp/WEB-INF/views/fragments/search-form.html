@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather - Navbar</title>
+</head>
+<body>
+
+<form th:fragment="search-form" method="get" th:action="@{/search}" class="search-container mb-3">
+    <div class="search-wrapper">
+        <label for="locationSearch" class="visually-hidden">Search location:</label>
+        <input type="text" th:value="${name}" class="search-input" id="locationSearch" placeholder="Search location..." name="name" required>
+        <button class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</form>
+
+</body>
+</html>

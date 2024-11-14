@@ -1,0 +1,226 @@
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+.logout-btn {
+    color: #6c757d !important;
+    border: 1px solid #6c757d;
+    border-radius: 4px;
+    padding: 0.2rem 0.75rem !important;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+    line-height: 1.2;
+}
+
+.logout-btn:hover {
+    background-color: #6c757d;
+    color: white !important;
+}
+
+.logo img {
+    width: 120px;
+    height: auto;
+    stroke-width: 3px;
+}
+
+.login-container,
+.registration-container {
+    max-width: 500px;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+.container {
+    margin-top: 80px;
+}
+
+.search-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 50px 12px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 8px 15px;
+    color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    color: #0056b3;
+}
+
+.search-location {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.error-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.locations-list {
+    margin: 20px auto;
+}
+
+.location-card {
+    flex: 0 0 350px;
+    width: 350px;
+    margin-bottom: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+}
+
+.location-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.coordinates-table {
+    font-family: monospace;
+}
+
+.coordinate-value {
+    text-align: right;
+}
+
+.badge {
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+.location-badges .badge {
+    padding: 0.5em 0.8em;
+    font-weight: normal;
+    font-size: 0.85em;
+    margin-right: 0.5em;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.weather-details i {
+    width: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.btn-outline-primary {
+    border-width: 1px;
+}
+
+.btn-outline-danger {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.action-container {
+    width: 100px;
+    text-align: center;
+}
+
+.action-container .badge {
+    display: inline-block;
+    width: 100%;
+}
+
+.icon {
+    font-size: 40px;
+    color: #ffcc00;
+}
+
+.temperature {
+    font-size: 3rem;
+}
+
+.temperature-block h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.brief-description,
+.full-description,
+.feels-like {
+    font-size: 0.9rem
+}
+
+.feels-like {
+    margin-bottom: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.location-badges {
+    min-height: 32px;
+}
+
+.location-badges .badge:empty {
+    display: none;
+}
+
+.preserve-whitespace {
+    white-space: pre-line;
+}
+
+@media (max-width: 1199px) {
+    .location-card {
+        width: calc(50% - 20px);
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .location-card {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .login-container,
+    .registration-container {
+        max-width: 90%;
+        min-width: 280px;
+    }
+}
